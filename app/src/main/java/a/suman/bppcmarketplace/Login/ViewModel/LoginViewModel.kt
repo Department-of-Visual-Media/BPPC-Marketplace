@@ -1,12 +1,14 @@
 package a.suman.bppcmarketplace.Login.ViewModel
 
+import a.suman.bppcmarketplace.Login.Model.LoginRepository
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 
 public class LoginViewModel(application: Application):AndroidViewModel(application){
 
 
-    var repo: LoginRepo = LoginRepo(application) // Class name of Repository is LoginRepo
+    var repo: LoginRepository =
+        LoginRepository(application) // Class name of Repository is LoginRepo
 
 
     fun callAndSaveInShared(){
