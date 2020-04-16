@@ -53,7 +53,7 @@ class LoginRepository(application: Application) {
             val completedTask = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                //   Log.i(Companion.TAG, "${account.displayName} ${account.email}")
+                Log.i(Companion.TAG, "${account.displayName} ${account.email}")
                 token = account.idToken.toString()
                 val observable = RetrofitClient.instance!!.api.registerWithBackend(token)
                 // val authObservable: Observable<LoginResponse> =
