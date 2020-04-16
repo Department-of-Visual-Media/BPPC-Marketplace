@@ -2,18 +2,18 @@ package a.suman.bppcmarketplace.Login.Model
 
 class LoginResponse(
     token: String,
-    username: String,
-    email: String
+
+    isNew: Boolean
 ) {
 
-    private var token: String
-    private var username: String
-    private var email: String
+    var token: String
+
+    var isNew: Boolean
 
 
     init {
-        this.email = email
-        this.username = username
+
         this.token = token
+        this.isNew = isNew
     }
 }

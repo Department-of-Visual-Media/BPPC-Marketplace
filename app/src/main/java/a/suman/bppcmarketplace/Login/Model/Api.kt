@@ -7,10 +7,14 @@ import retrofit2.http.POST
 
 interface Api {
     @FormUrlEncoded
-    @POST("/auth/register/")
+    @POST("auth/register/")
     fun registerWithBackend(@Field("id_token") token: String): Observable<LoginResponse>
 
     @FormUrlEncoded
-    @POST("/auth/login/")
+    @POST("auth/login/")
     fun loginWithBackend(@Field("id_token") token: String): Observable<LoginResponse>
+
+    @FormUrlEncoded
+    @POST("auth/authenticate/")
+    fun authWithBackend(@Field("id_token") token: String): Observable<LoginResponse>
 }
