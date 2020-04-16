@@ -50,7 +50,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
     //MVVM
-    def version= '1.1.1'
+    def version = '1.1.1'
     implementation "android.arch.lifecycle:extensions:$version"
     annotationProcessor "android.arch.lifecycle:compiler:$version"
 }
