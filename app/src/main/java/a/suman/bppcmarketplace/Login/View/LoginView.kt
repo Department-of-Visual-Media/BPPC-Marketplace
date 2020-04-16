@@ -1,6 +1,5 @@
 package a.suman.bppcmarketplace.Login.View
 
-import a.suman.bppcmarketplace.Login.Model.ActivityNavigation
 import a.suman.bppcmarketplace.Login.ViewModel.LoginViewModel
 import a.suman.bppcmarketplace.R
 import android.content.Intent
@@ -10,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.common.SignInButton
 
-class LoginView : AppCompatActivity(), ActivityNavigation {
+class LoginView : AppCompatActivity() {
+    private val RC_SIGN_IN = 1
     lateinit var loginViewModel: LoginViewModel
     lateinit var signInButton: SignInButton
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,14 +18,8 @@ class LoginView : AppCompatActivity(), ActivityNavigation {
         setContentView(R.layout.login_layout)
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         signInButton = findViewById(R.id.sign_in_button)
-        subscribeView()
-        signInButton.setOnClickListener { loginViewModel.initGoogleSignIn() }
+        signInButton.setOnClickListener { startActivityForResult(loginViewModel.initGoogleSignIn(),1) }
 
-    }
-
-    private fun subscribeView() {
-        loginViewModel.startActivityForResultEvent.setEventReceiver(this, this)
-        //this sets the LifeCycler owner and receiver
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

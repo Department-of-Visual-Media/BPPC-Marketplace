@@ -55,51 +55,22 @@ class LoginRepository(application: Application) {
             if (account != null) {
                 Log.i(Companion.TAG, "${account.displayName} ${account.email}")
                 token = account.idToken.toString()
-                val observable = RetrofitClient.instance!!.api.registerWithBackend(token)
-                // val authObservable: Observable<LoginResponse> =
-                //  RetrofitClient.instance!!.api.authWithBackend(token)
-//                compositeDisposable
-//                    .add(authObservable.subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribeWith(object :DisposableObserver<LoginResponse>(){
-//                            override fun onComplete() {
-//                                Log.i(TAG,"User Logged In")
-//                            }
-//
-//                            override fun onNext(t: LoginResponse) {
-//                                Log.i(TAG,t.token+" "+t.isNew)
-//                            }
-//
-//                            override fun onError(e: Throwable) {
-//                                Log.i(TAG+"Error",e.localizedMessage)
-//                            }
-//
-//                        }))
+                val observable = RetrofitClient.instance!!.api.authWithBackend(token)
 
                 compositeDisposable.add(
                     observable.subscribeOn(Schedulers.io()).observeOn(
                         AndroidSchedulers.mainThread()
                     ).subscribe({
-
+                        Log.i(TAG, "\n ${it.token}")
+                        storeDataIntoSharedPref(
+                            TOKEN_TAG,
+                            it.token,
+                            application
+                        )
                     }
                         , {
                             if (it is HttpException) {
-                                val observable2 =
-                                    RetrofitClient.instance!!.api.loginWithBackend(token)
-                                compositeDisposable.add(
-                                    observable2.observeOn(AndroidSchedulers.mainThread())
-                                        .subscribeOn(
-                                            Schedulers.io()
-                                        ).subscribe({
-                                            Log.i(TAG, "\n ${it.token}")
-                                            storeDataIntoSharedPref(
-                                                TOKEN_TAG,
-                                                it.token,
-                                                application
-                                            )
-                                        }, {
-                                        })
-                                )
+                                Log.d(TAG, "HTTPException ${it.message()}")
                             }
                         })
                 )
