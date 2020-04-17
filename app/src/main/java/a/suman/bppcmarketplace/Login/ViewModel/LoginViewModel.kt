@@ -35,6 +35,9 @@ public class LoginViewModel(application: Application):AndroidViewModel(applicati
     }
 
     companion object {
-        final val TAG: String = "LoginViewModel"
+        const val TAG: String = "LoginViewModel"
     }
+
+    //@Shivi, create a function here for getting backendTokenMutableLiveData, but return it as LiveData<String>
+
 }

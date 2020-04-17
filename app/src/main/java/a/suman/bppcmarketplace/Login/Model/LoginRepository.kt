@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Intent
 import android.preference.PreferenceManager
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,7 +21,8 @@ class LoginRepository(application: Application) {
     private val RC_SIGN_IN = 1
     lateinit private var mGoogleSignInClient: GoogleSignInClient
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
-    lateinit var token: String
+    private lateinit var googleSignIntoken: String
+    private var backendTokenMutableLiveData = MutableLiveData<String>()
 
 
     fun getGoogleSignInIntent(): Intent {
@@ -54,8 +56,8 @@ class LoginRepository(application: Application) {
             val account = completedTask.getResult(ApiException::class.java)
             if (account != null) {
                 Log.i(Companion.TAG, "${account.displayName} ${account.email}")
-                token = account.idToken.toString()
-                val observable = RetrofitClient.instance!!.api.authWithBackend(token)
+                googleSignIntoken = account.idToken.toString()
+                val observable = RetrofitClient.instance!!.api.authWithBackend(googleSignIntoken)
 
                 compositeDisposable.add(
                     observable.subscribeOn(Schedulers.io()).observeOn(
@@ -67,6 +69,9 @@ class LoginRepository(application: Application) {
                             it.token,
                             application
                         )
+                        backendTokenMutableLiveData.postValue(it.token)
+
+
                     }
                         , {
                             if (it is HttpException) {
@@ -81,6 +86,11 @@ class LoginRepository(application: Application) {
             Log.i(TAG, e.toString())
 
         }
+
+    }
+
+    fun getBackendTokenMutableLiveData(): MutableLiveData<String> {
+        return backendTokenMutableLiveData
     }
 
     fun getTokenFromShared() {
@@ -92,7 +102,7 @@ class LoginRepository(application: Application) {
         const val TOKEN_TAG: String = "token"
     }
 
-    fun storeDataIntoSharedPref(
+    private fun storeDataIntoSharedPref(
         key: String?,
         value: String?,
         application: Application
@@ -105,7 +115,7 @@ class LoginRepository(application: Application) {
     }
 
 
-    fun getDataFromSharedPref(
+    private fun getDataFromSharedPref(
         key: String?,
         application: Application
     ): String? {

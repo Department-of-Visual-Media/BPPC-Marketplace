@@ -19,7 +19,7 @@ class LoginView : AppCompatActivity() {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         signInButton = findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener { startActivityForResult(loginViewModel.initGoogleSignIn(),1) }
-
+//@Shivi, call the the method u created in LoginViewModel to get the live data and observe changes to start MainActivity
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
