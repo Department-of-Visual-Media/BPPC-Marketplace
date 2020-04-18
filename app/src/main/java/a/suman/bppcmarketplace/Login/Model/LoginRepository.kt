@@ -64,14 +64,10 @@ class LoginRepository(application: Application) {
                         AndroidSchedulers.mainThread()
                     ).subscribe({ it ->
                         Log.i(TAG, "\n ${it.token}")
-                        storeDataIntoSharedPref(
-                            TOKEN_TAG,
-                            it.token,
-                            application
-                        )
+                        storeDataIntoSharedPref(TOKEN_TAG, it.token, application)
+                        storeDataIntoSharedPref(EMAIL_TAG, it.email, application)
+                        storeDataIntoSharedPref(USERNAME_TAG, it.username, application)
                         backendTokenMutableLiveData.postValue(it.token)
-
-
                     }
                         , {
                             if (it is HttpException) {
@@ -107,9 +103,19 @@ class LoginRepository(application: Application) {
         getDataFromSharedPref(TOKEN_TAG, application)
     }
 
+    fun getEmailFromShared() {
+        getDataFromSharedPref(EMAIL_TAG, application)
+    }
+
+    fun getUsernameFromShared() {
+        getDataFromSharedPref(USERNAME_TAG, application)
+    }
+
     companion object {
         const val TAG: String = "LoginRepository"
         const val TOKEN_TAG: String = "token"
+        const val USERNAME_TAG: String = "username"
+        const val EMAIL_TAG: String = "email"
     }
 
     private fun storeDataIntoSharedPref(
