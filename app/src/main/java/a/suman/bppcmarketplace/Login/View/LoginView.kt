@@ -5,7 +5,9 @@ import a.suman.bppcmarketplace.R
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.common.SignInButton
 
@@ -20,6 +22,12 @@ class LoginView : AppCompatActivity() {
         signInButton = findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener { startActivityForResult(loginViewModel.initGoogleSignIn(),1) }
 //@Shivi, call the the method u created in LoginViewModel to get the live data and observe changes to start MainActivity
+        // and also call the postToken() method
+
+
+        loginViewModel.getLoginExceptionLiveData().observe(this, Observer {
+            Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
+        })
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -28,12 +36,13 @@ class LoginView : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         loginViewModel.clearDisposables()
     }
 
     companion object {
-        final val TAG: String = "LoginView"
+        const val TAG: String = "LoginView"
     }
 }

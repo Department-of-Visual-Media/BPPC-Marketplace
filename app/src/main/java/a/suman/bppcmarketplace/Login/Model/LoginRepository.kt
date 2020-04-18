@@ -20,10 +20,10 @@ import retrofit2.HttpException
 class LoginRepository(application: Application) {
     private val RC_SIGN_IN = 1
     lateinit private var mGoogleSignInClient: GoogleSignInClient
-    var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private var compositeDisposable: CompositeDisposable = CompositeDisposable()
     private lateinit var googleSignIntoken: String
     private var backendTokenMutableLiveData = MutableLiveData<String>()
-
+    private var loginExceptionMutableLiveData = MutableLiveData<String>()
 
     fun getGoogleSignInIntent(): Intent {
 
@@ -62,7 +62,7 @@ class LoginRepository(application: Application) {
                 compositeDisposable.add(
                     observable.subscribeOn(Schedulers.io()).observeOn(
                         AndroidSchedulers.mainThread()
-                    ).subscribe({
+                    ).subscribe({ it ->
                         Log.i(TAG, "\n ${it.token}")
                         storeDataIntoSharedPref(
                             TOKEN_TAG,
@@ -83,11 +83,21 @@ class LoginRepository(application: Application) {
 
 
         } catch (e: ApiException) {
+            loginExceptionMutableLiveData.postValue("Login Failed")
             Log.i(TAG, e.toString())
 
         }
 
     }
+
+    fun getloginExceptionLiveData(): MutableLiveData<String> {
+        return loginExceptionMutableLiveData
+    }
+
+    fun postTokenFromShared() {
+        backendTokenMutableLiveData.postValue(getDataFromSharedPref(TOKEN_TAG, application))
+    }
+
 
     fun getBackendTokenMutableLiveData(): MutableLiveData<String> {
         return backendTokenMutableLiveData

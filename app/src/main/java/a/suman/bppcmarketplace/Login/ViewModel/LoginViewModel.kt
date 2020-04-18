@@ -5,14 +5,15 @@ import android.app.Application
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 
-public class LoginViewModel(application: Application):AndroidViewModel(application){
+public class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val RC_SIGN_IN = 1
 
     var repo: LoginRepository =
         LoginRepository(application) // Class name of Repository is LoginRepository
 
-    fun initGoogleSignIn():Intent {
+    fun initGoogleSignIn(): Intent {
         return repo.getGoogleSignInIntent()
     }
 
@@ -34,10 +35,18 @@ public class LoginViewModel(application: Application):AndroidViewModel(applicati
         repo.clearDisposables()
     }
 
+
     companion object {
         const val TAG: String = "LoginViewModel"
     }
 
     //@Shivi, create a function here for getting backendTokenMutableLiveData, but return it as LiveData<String>
 
+
+    //create a function here as 'postToken()' (returntype is void) and inside it call postTokenFromShared() of repo
+
+
+    fun getLoginExceptionLiveData(): LiveData<String> {
+        return repo.getloginExceptionLiveData()
+    }
 }
