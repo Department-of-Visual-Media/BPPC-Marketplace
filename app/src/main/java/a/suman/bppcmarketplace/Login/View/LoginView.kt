@@ -1,6 +1,7 @@
 package a.suman.bppcmarketplace.Login.View
 
 import a.suman.bppcmarketplace.Login.ViewModel.LoginViewModel
+import a.suman.bppcmarketplace.MainActivity
 import a.suman.bppcmarketplace.R
 import android.content.Intent
 import android.os.Bundle
@@ -20,15 +21,23 @@ class LoginView : AppCompatActivity() {
         setContentView(R.layout.login_layout)
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         signInButton = findViewById(R.id.sign_in_button)
-        signInButton.setOnClickListener { startActivityForResult(loginViewModel.initGoogleSignIn(),1) }
-//@Shivi, call the the method u created in LoginViewModel to get the live data and observe changes to start MainActivity
-        // and also call the postToken() method
+        signInButton.setOnClickListener { startActivityForResult(loginViewModel.initGoogleSignIn(),1)
 
+            loginViewModel.backendMutableLiveData().observe(this, Observer {
+                if(it!=null)
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+            )
+        }
+            loginViewModel.postToken()
 
-        loginViewModel.getLoginExceptionLiveData().observe(this, Observer {
+            loginViewModel.getLoginExceptionLiveData().observe(this, Observer {
             Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
-        })
+                }
+            )
     }
+
+
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.i(TAG, "Getting account and sending to LoginViewModel")

@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 
 public class LoginViewModel(application: Application) : AndroidViewModel(application) {
+
     private val RC_SIGN_IN = 1
 
     var repo: LoginRepository =
@@ -28,7 +29,7 @@ public class LoginViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun getTokenFromShared() {
-        repo.getTokenFromShared() // Method name for repo
+        repo.getTokenFromShared()
     }
 
     fun clearDisposables() {
@@ -40,10 +41,15 @@ public class LoginViewModel(application: Application) : AndroidViewModel(applica
         const val TAG: String = "LoginViewModel"
     }
 
-    //@Shivi, create a function here for getting backendTokenMutableLiveData, but return it as LiveData<String>
+    fun backendMutableLiveData(): LiveData<String> {
+        return repo.getBackendTokenMutableLiveData()
 
+    }
 
-    //create a function here as 'postToken()' (returntype is void) and inside it call postTokenFromShared() of repo
+    fun postToken(){
+        repo.postTokenFromShared()
+    }
+
 
 
     fun getLoginExceptionLiveData(): LiveData<String> {
