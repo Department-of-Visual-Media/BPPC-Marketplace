@@ -21,17 +21,22 @@ class LoginView : AppCompatActivity() {
         setContentView(R.layout.login_layout)
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         signInButton = findViewById(R.id.sign_in_button)
-        signInButton.setOnClickListener { startActivityForResult(loginViewModel.initGoogleSignIn(),1)
-
+        signInButton.setOnClickListener {
+            startActivityForResult(
+                loginViewModel.initGoogleSignIn(),
+                1
+            )
+        }
+        loginViewModel.postToken()
             loginViewModel.backendMutableLiveData().observe(this, Observer {
                 if(it!=null)
                     startActivity(Intent(this, MainActivity::class.java))
                 }
             )
-        }
-            loginViewModel.postToken()
 
-            loginViewModel.getLoginExceptionLiveData().observe(this, Observer {
+
+
+        loginViewModel.getLoginExceptionLiveData().observe(this, Observer {
             Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
                 }
             )
