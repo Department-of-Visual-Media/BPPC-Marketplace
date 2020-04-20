@@ -1,5 +1,6 @@
 package a.suman.bppcmarketplace.Login.Model
 
+
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,7 +11,7 @@ class RetrofitClient private constructor() {
         get() = retrofit.create(Api::class.java)
 
     companion object {
-        private const val BASE_URL = "http://market.bits-dvm.org/"
+        private const val BASE_URL = "https://market.bits-dvm.org/"
 
         @get:Synchronized
         var instance: RetrofitClient? = null

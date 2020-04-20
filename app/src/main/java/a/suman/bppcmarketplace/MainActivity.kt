@@ -1,8 +1,8 @@
 package a.suman.bppcmarketplace
 
-import androidx.appcompat.app.AppCompatActivity
+import a.suman.bppcmarketplace.Profile.View.ProfileFragment
 import android.os.Bundle
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity() {
                     openFragment(fragment)
                 }
                 R.id.profile -> {
-                    val fragment = ProfileFragment()
+                    val fragment =
+                        ProfileFragment()
                     openFragment(fragment)
                 }
                 R.id.chat -> {
