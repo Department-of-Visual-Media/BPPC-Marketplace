@@ -9,7 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.SignInButton
 
 class LoginView : AppCompatActivity() {
@@ -19,7 +19,7 @@ class LoginView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        loginViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(LoginViewModel::class.java)
         signInButton = findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener {
             startActivityForResult(
@@ -27,8 +27,8 @@ class LoginView : AppCompatActivity() {
                 1
             )
         }
-        loginViewModel.postToken()
-            loginViewModel.backendMutableLiveData().observe(this, Observer {
+
+        loginViewModel.TokenLiveData.observe(this, Observer {
                 if(it!=null)
                     startActivity(Intent(this, MainActivity::class.java))
                 }
@@ -36,16 +36,24 @@ class LoginView : AppCompatActivity() {
 
 
 
-        loginViewModel.getLoginExceptionLiveData().observe(this, Observer {
-            Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
-                }
-            )
+        loginViewModel.LoginStatusLiveData.observe(this, Observer {
+            if (it.equals("Error")) {
+                Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_LONG)
+                    .show()
+            }
+            if (it.equals("Success")) {
+
+            }
+            if (it.equals("Server Error")) {
+            Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_LONG)
+                .show()
+            }
+        })
     }
 
 
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.i(TAG, "Getting account and sending to LoginViewModel")
         loginViewModel.onResultFromActivity(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }

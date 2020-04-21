@@ -6,20 +6,23 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import javax.security.auth.login.LoginException
 
-public class LoginViewModel(application: Application) : AndroidViewModel(application) {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private val RC_SIGN_IN = 1
+    private var repo: LoginRepository =
+        LoginRepository(application)
+    val TokenLiveData= liveData{emitSource(repo.backendTokenLiveData) }
+    val LoginStatusLiveData= liveData {emitSource(repo.loginStatusLiveData)}
 
-    var repo: LoginRepository =
-        LoginRepository(application) // Class name of Repository is LoginRepository
 
     fun initGoogleSignIn(): Intent {
         return repo.getGoogleSignInIntent()
     }
 
     fun onResultFromActivity(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.i(TAG, "Sending account to repo")
         when (requestCode) {
             RC_SIGN_IN -> {
                 repo.googleSignInComplete(data)
@@ -28,9 +31,6 @@ public class LoginViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun getTokenFromShared() {
-        repo.getTokenFromShared()
-    }
 
     fun clearDisposables() {
         repo.clearDisposables()
@@ -41,18 +41,4 @@ public class LoginViewModel(application: Application) : AndroidViewModel(applica
         const val TAG: String = "LoginViewModel"
     }
 
-    fun backendMutableLiveData(): LiveData<String> {
-        return repo.getBackendTokenMutableLiveData()
-
-    }
-
-    fun postToken(){
-        repo.postTokenFromShared()
-    }
-
-
-
-    fun getLoginExceptionLiveData(): LiveData<String> {
-        return repo.getloginExceptionLiveData()
-    }
 }

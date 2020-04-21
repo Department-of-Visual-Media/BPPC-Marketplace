@@ -5,7 +5,9 @@ import android.app.Application
 import android.content.Intent
 import android.preference.PreferenceManager
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,11 +21,21 @@ import retrofit2.HttpException
 
 class LoginRepository(application: Application) {
     private val RC_SIGN_IN = 1
+    var application: Application
     lateinit private var mGoogleSignInClient: GoogleSignInClient
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
     private lateinit var googleSignIntoken: String
-    private var backendTokenMutableLiveData = MutableLiveData<String>()
-    private var loginExceptionMutableLiveData = MutableLiveData<String>()
+    private var backendTokenMutableLiveData: MutableLiveData<String> = MutableLiveData()
+    val backendTokenLiveData= liveData {emitSource(backendTokenMutableLiveData) }
+
+    private var loginStatusMutableLiveData = MutableLiveData<String>()
+    val loginStatusLiveData = liveData{ emitSource(loginStatusMutableLiveData)}
+
+    init {
+    this.application = application
+    backendTokenMutableLiveData.postValue(getDataFromSharedPref(TOKEN_TAG, application))
+
+    }
 
     fun getGoogleSignInIntent(): Intent {
 
@@ -42,11 +54,6 @@ class LoginRepository(application: Application) {
         return signInIntent
     }
 
-    var application: Application
-
-    init {
-        this.application = application
-    }
 
 
     fun googleSignInComplete(data: Intent?) {
@@ -67,49 +74,23 @@ class LoginRepository(application: Application) {
                         storeDataIntoSharedPref(TOKEN_TAG, it.token, application)
                         storeDataIntoSharedPref(EMAIL_TAG, it.email, application)
                         storeDataIntoSharedPref(USERNAME_TAG, it.username, application)
-                        backendTokenMutableLiveData.postValue(it.token)
+                        loginStatusMutableLiveData.postValue("Success")
                     }
                         , {
                             if (it is HttpException) {
                                 Log.d(TAG, "HTTPException ${it.message()}")
+                                loginStatusMutableLiveData.postValue("Server Error")
                             }
                         })
                 )
             }
-
-
         } catch (e: ApiException) {
-            loginExceptionMutableLiveData.postValue("Login Failed")
-            Log.i(TAG, e.toString())
-
+            loginStatusMutableLiveData.postValue("Error")
         }
 
     }
 
-    fun getloginExceptionLiveData(): MutableLiveData<String> {
-        return loginExceptionMutableLiveData
-    }
 
-    fun postTokenFromShared() {
-        backendTokenMutableLiveData.postValue(getDataFromSharedPref(TOKEN_TAG, application))
-    }
-
-
-    fun getBackendTokenMutableLiveData(): MutableLiveData<String> {
-        return backendTokenMutableLiveData
-    }
-
-    fun getTokenFromShared() {
-        getDataFromSharedPref(TOKEN_TAG, application)
-    }
-
-    fun getEmailFromShared() {
-        getDataFromSharedPref(EMAIL_TAG, application)
-    }
-
-    fun getUsernameFromShared() {
-        getDataFromSharedPref(USERNAME_TAG, application)
-    }
 
     companion object {
         const val TAG: String = "LoginRepository"
