@@ -70,7 +70,7 @@ class LoginRepository(application: Application) {
 
                 compositeDisposable.add(
                     observable.subscribeOn(Schedulers.io()).observeOn(
-                        AndroidSchedulers.mainThread()
+                        Schedulers.newThread()
                     ).subscribe({ it ->
                         Log.i(TAG, "\n ${it.token}")
                         storeDataIntoSharedPref(TOKEN_TAG, it.token, application)

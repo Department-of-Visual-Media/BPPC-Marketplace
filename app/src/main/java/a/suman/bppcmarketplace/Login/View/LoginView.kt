@@ -25,6 +25,8 @@ class LoginView : AppCompatActivity() {
                 loginViewModel.initGoogleSignIn(),
                 1
             )
+            sign_in_button.cardElevation=0f
+            sign_in_button.isEnabled=false
         }
 
         loginViewModel.TokenLiveData.observe(this, Observer {
@@ -41,6 +43,9 @@ class LoginView : AppCompatActivity() {
                     .show()
                 girl.visibility=View.VISIBLE
                 loader.visibility=View.GONE
+                progressBar.visibility=View.GONE
+                sign_in_button.cardElevation=5f
+                sign_in_button.isEnabled=true
             }
         })
     }
@@ -48,12 +53,10 @@ class LoginView : AppCompatActivity() {
 
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode==RC_SIGN_IN){
-            girl.visibility= View.GONE
-            loader.visibility=View.VISIBLE
-        loginViewModel.onResultFromActivity(requestCode, resultCode, data)}else{
-            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show()
-        }
+        girl.visibility= View.GONE
+        loader.visibility=View.VISIBLE
+        progressBar.visibility=View.VISIBLE
+        loginViewModel.onResultFromActivity(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
 

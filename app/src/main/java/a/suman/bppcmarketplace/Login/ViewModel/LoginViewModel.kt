@@ -23,6 +23,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onResultFromActivity(requestCode: Int, resultCode: Int, data: Intent?) {
+       Log.d(TAG, requestCode.toString())
         when (requestCode) {
             RC_SIGN_IN -> {
                 repo.googleSignInComplete(data)
