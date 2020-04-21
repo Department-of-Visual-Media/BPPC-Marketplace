@@ -37,6 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     //GooglePlayAuth
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
@@ -68,4 +69,6 @@ dependencies {
     //HttpLoggingInterceptor
     implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
 
+    //LottieFiles
+    implementation 'com.airbnb.android:lottie:3.4.0'
 }

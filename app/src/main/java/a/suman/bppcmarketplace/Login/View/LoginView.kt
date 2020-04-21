@@ -5,23 +5,22 @@ import a.suman.bppcmarketplace.MainActivity
 import a.suman.bppcmarketplace.R
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.common.SignInButton
+import kotlinx.android.synthetic.main.login_layout.*
 
 class LoginView : AppCompatActivity() {
     private val RC_SIGN_IN = 1
     lateinit var loginViewModel: LoginViewModel
-    lateinit var signInButton: SignInButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
         loginViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(LoginViewModel::class.java)
-        signInButton = findViewById(R.id.sign_in_button)
-        signInButton.setOnClickListener {
+        sign_in_button.setOnClickListener {
             startActivityForResult(
                 loginViewModel.initGoogleSignIn(),
                 1
@@ -37,16 +36,11 @@ class LoginView : AppCompatActivity() {
 
 
         loginViewModel.LoginStatusLiveData.observe(this, Observer {
-            if (it.equals("Error")) {
+            if (it=="Error" || it=="Server Error") {
                 Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_LONG)
                     .show()
-            }
-            if (it.equals("Success")) {
-
-            }
-            if (it.equals("Server Error")) {
-            Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_LONG)
-                .show()
+                girl.visibility=View.VISIBLE
+                loader.visibility=View.GONE
             }
         })
     }
@@ -54,7 +48,12 @@ class LoginView : AppCompatActivity() {
 
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        loginViewModel.onResultFromActivity(requestCode, resultCode, data)
+        if(requestCode==RC_SIGN_IN){
+            girl.visibility= View.GONE
+            loader.visibility=View.VISIBLE
+        loginViewModel.onResultFromActivity(requestCode, resultCode, data)}else{
+            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show()
+        }
         super.onActivityResult(requestCode, resultCode, data)
     }
 

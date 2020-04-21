@@ -3,6 +3,7 @@ package a.suman.bppcmarketplace.Login.Model
 import a.suman.bppcmarketplace.R
 import android.app.Application
 import android.content.Intent
+import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -59,6 +60,7 @@ class LoginRepository(application: Application) {
     fun googleSignInComplete(data: Intent?) {
         try {
             Log.i(TAG, "Account recieved in repo")
+            loginStatusMutableLiveData.postValue("")
             val completedTask = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = completedTask.getResult(ApiException::class.java)
             if (account != null) {
@@ -108,6 +110,9 @@ class LoginRepository(application: Application) {
         val editor = preferences.edit()
         editor.putString(key, value)
         editor.commit()
+        if(key== TOKEN_TAG){
+            backendTokenMutableLiveData.postValue(getDataFromSharedPref(TOKEN_TAG, application))
+        }
         Log.i(TAG + "ShPref", "Data Saved")
     }
 
