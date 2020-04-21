@@ -10,22 +10,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //to hide action Bar
-        actionBar?.hide()
-        if (getSupportActionBar() != null) {
-            getSupportActionBar()?.hide();
-        }
         setContentView(R.layout.activity_main)
-        //Setting up Navigation Bar
-        var bottom_nav: ChipNavigationBar = findViewById(R.id.chipNavigationBar)
+        val bottom_nav: ChipNavigationBar = findViewById(R.id.chipNavigationBar)
 
-
-        fun openFragment(fragment: Fragment) {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
+        openFragment(ProductsFragment())
+        bottom_nav.setItemSelected(R.id.products)
 
         bottom_nav.setOnItemSelectedListener { id :Int->
             when (id) {
@@ -52,6 +41,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }
 
