@@ -1,5 +1,5 @@
 # BPPC_MARKETPLACE
-
+## Originally compiled by Anshal Shukla
 A Marketplace app aimed to make it easy for students to find their bookpops, cyclepops and to facilitate all other kinds of commerce within BITS Pilani Campus.
 
 ## Setting Up Server
