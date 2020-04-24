@@ -1,5 +1,6 @@
 package a.suman.bppcmarketplace
 
+import a.suman.bppcmarketplace.ProductList.View.ProductsFragment
 import a.suman.bppcmarketplace.Profile.View.ProfileFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,8 @@ class MainActivity : AppCompatActivity() {
         bottom_nav.setOnItemSelectedListener { id :Int->
             when (id) {
                 R.id.products -> {
-                    val fragment = ProductsFragment()
+                    val fragment =
+                        ProductsFragment()
                     openFragment(fragment)
                 }
                 R.id.users -> {
