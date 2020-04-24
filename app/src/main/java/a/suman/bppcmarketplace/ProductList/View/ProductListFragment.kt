@@ -9,7 +9,7 @@ import android.view.ViewGroup
 
 
 
-class ProductsListView : Fragment() {
+class ProductsListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

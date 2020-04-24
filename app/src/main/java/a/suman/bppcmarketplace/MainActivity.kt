@@ -1,6 +1,6 @@
 package a.suman.bppcmarketplace
 
-import a.suman.bppcmarketplace.ProductList.View.ProductsListView
+import a.suman.bppcmarketplace.ProductList.View.ProductsListFragment
 import a.suman.bppcmarketplace.Profile.View.ProfileFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,14 +14,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val bottom_nav: ChipNavigationBar = findViewById(R.id.chipNavigationBar)
 
-        openFragment(ProductsListView())
+        openFragment(ProductsListFragment())
         bottom_nav.setItemSelected(R.id.products)
 
         bottom_nav.setOnItemSelectedListener { id :Int->
             when (id) {
                 R.id.products -> {
                     val fragment =
-                        ProductsListView()
+                        ProductsListFragment()
                     openFragment(fragment)
                 }
                 R.id.users -> {
