@@ -1,7 +1,10 @@
 package a.suman.bppcmarketplace
 
+import a.suman.bppcmarketplace.ChatList.View.ChatListFragment
 import a.suman.bppcmarketplace.ProductList.View.ProductsListFragment
 import a.suman.bppcmarketplace.Profile.View.ProfileFragment
+import a.suman.bppcmarketplace.Upload.View.UploadFragment
+import a.suman.bppcmarketplace.UsersList.View.UsersListFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -25,11 +28,13 @@ class MainActivity : AppCompatActivity() {
                     openFragment(fragment)
                 }
                 R.id.users -> {
-                    val fragment = UsersListFragment()
+                    val fragment =
+                        UsersListFragment()
                     openFragment(fragment)
                 }
                 R.id.upload -> {
-                    val fragment = UploadFragment()
+                    val fragment =
+                        UploadFragment()
                     openFragment(fragment)
                 }
                 R.id.profile -> {
@@ -38,7 +43,8 @@ class MainActivity : AppCompatActivity() {
                     openFragment(fragment)
                 }
                 R.id.chat -> {
-                    val fragment = ChatListFragment()
+                    val fragment =
+                        ChatListFragment()
                     openFragment(fragment)
                 }
             }

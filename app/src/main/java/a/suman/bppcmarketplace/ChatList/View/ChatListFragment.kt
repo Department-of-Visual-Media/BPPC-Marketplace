@@ -1,5 +1,6 @@
-package a.suman.bppcmarketplace
+package a.suman.bppcmarketplace.ChatList.View
 
+import a.suman.bppcmarketplace.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

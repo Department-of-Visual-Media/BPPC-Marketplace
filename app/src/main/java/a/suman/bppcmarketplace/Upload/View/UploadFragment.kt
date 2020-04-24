@@ -1,12 +1,13 @@
-package a.suman.bppcmarketplace
+package a.suman.bppcmarketplace.Upload.View
 
+import a.suman.bppcmarketplace.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class UsersListFragment : Fragment() {
+class UploadFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -14,7 +15,7 @@ class UsersListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_users, container, false)
+        return inflater.inflate(R.layout.fragment_upload_pictures, container, false)
     }
 
 }
