@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProductList.View.ProductListFragment">
+    tools:context=".UsersList.View.UsersListFragment">
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_product_list"
+        android:id="@+id/appbar_users_list"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:elevation="0dp">
@@ -62,8 +62,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

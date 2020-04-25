@@ -17,32 +17,6 @@ import kotlinx.android.synthetic.main.fragment_product_list.*
 
 
 class ProductListFragment : Fragment() {
-    private fun FillCustomGradient(v: View) {
-        val layers = arrayOfNulls<Drawable>(1)
-        val sf: ShaderFactory = object : ShaderFactory() {
-            override fun resize(width: Int, height: Int): Shader {
-                return LinearGradient(
-                    0f,
-                    0f,
-                    0f,
-                    v.height.toFloat(), intArrayOf(
-                        resources.getColor(R.color.colorPrimaryDark),  // please input your color from resource for color-4
-                        resources.getColor(R.color.colorPrimaryDark),
-                        resources.getColor(R.color.colorPrimary),
-                        resources.getColor(R.color.design_default_color_background)
-                    ), floatArrayOf(0f, 0.6f, 0.8f, 1f),
-                    Shader.TileMode.CLAMP
-                )
-            }
-        }
-        val p = PaintDrawable()
-        p.shape = RectShape()
-        p.shaderFactory = sf
-        p.setCornerRadii(floatArrayOf(5f, 5f, 5f, 5f, 0f, 0f, 0f, 0f))
-        layers[0] = p as Drawable
-        val composite = LayerDrawable(layers)
-        v.setBackgroundDrawable(composite)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +28,34 @@ class ProductListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FillCustomGradient(view.findViewById(R.id.appbar))
+        fillCustomGradient(view.findViewById(R.id.appbar_product_list))
+    }
+
+    private fun fillCustomGradient(v: View) {
+        val layers = arrayOfNulls<Drawable>(1)
+        val sf: ShaderFactory = object : ShaderFactory() {
+            override fun resize(width: Int, height: Int): Shader {
+                return LinearGradient(
+                    0f,
+                    0f,
+                    0f,
+                    v.height.toFloat(), intArrayOf(
+                        resources.getColor(R.color.colorPrimaryDark, null),  // please input your color from resource for color-4
+                        resources.getColor(R.color.colorPrimaryDark, null),
+                        resources.getColor(R.color.colorPrimary, null),
+                        resources.getColor(R.color.design_default_color_background, null)
+                    ), floatArrayOf(0f, 0.6f, 0.8f, 1f),
+                    Shader.TileMode.CLAMP
+                )
+            }
+        }
+        val p = PaintDrawable()
+        p.shape = RectShape()
+        p.shaderFactory = sf
+        p.setCornerRadii(floatArrayOf(5f, 5f, 5f, 5f, 0f, 0f, 0f, 0f))
+        layers[0] = p as Drawable
+        val composite = LayerDrawable(layers)
+        v.background =composite
     }
 
 }

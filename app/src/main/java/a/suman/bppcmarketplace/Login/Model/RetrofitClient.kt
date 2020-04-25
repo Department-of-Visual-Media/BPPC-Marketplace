@@ -13,7 +13,7 @@ class RetrofitClient private constructor() {
         get() = retrofit.create(Api::class.java)
 
     companion object {
-        private const val BASE_URL = "http://hedonhermdev.tech/"
+        private const val BASE_URL = "http://market.bits-dvm.org"
 
         @get:Synchronized
         var instance: RetrofitClient? = null

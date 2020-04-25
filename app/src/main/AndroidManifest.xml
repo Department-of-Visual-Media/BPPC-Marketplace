@@ -14,14 +14,14 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Splash.View.SplashScreen"></activity>
         <activity android:name=".Login.View.LoginView">
-
-        </activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing">
+
         </activity>
     </application>
 
