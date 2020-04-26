@@ -25,27 +25,38 @@ class LoginView : AppCompatActivity(), SensorEventListener {
     lateinit var sensormanager:SensorManager
     lateinit var gyro:Sensor
     var timestamp:Float=0f
-    var cummulativeRotationAroundX=0f
-    var cummulativeRotationAroundY=0f
-    var imageView2TranslationX=0
-    var imageView2TranslationY=0
-    var viewTranslationX=0
-    var viewTranslationY=0
-    var girlTranslationX=0
-    var girlTranslationY=0
-    var loaderTranslationX=0
-    var loaderTranslationY=0
+    var cummulativeRotationAroundX:Float=0f
+    var cummulativeRotationAroundY:Float=0f
+
+    var imageView2TranslationX:Float=0f
+    var imageView2TranslationY:Float=0f
+    var viewTranslationX:Float=0f
+     var viewTranslationY:Float=0f
+     var girlTranslationX:Float=0f
+     var girlTranslationY:Float=0f
+     var loaderTranslationX:Float=0f
+     var loaderTranslationY:Float=0f
+    var imageViewTranslationX:Float=0f
+    var imageViewTranslationY:Float=0f
+
+    companion object {
+        const val TAG: String = "LoginView"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
-        var imageView2TranslationX=imageView2.translationX
-        var imageView2TranslationY=imageView2.translationY
-        var viewTranslationX=view.translationX
-        var viewTranslationY=view.translationY
-        var girlTranslationX=girl.translationX
-        var girlTranslationY=girl.translationY
-        var loaderTranslationX=loader.translationX
-        var loaderTranslationY=loader.translationY
+        imageView2TranslationX=imageView2.translationX
+        imageView2TranslationY=imageView2.translationY
+        imageViewTranslationX=imageView.translationX
+        imageViewTranslationY=imageView.translationX
+        viewTranslationX=view.translationX
+        viewTranslationY=view.translationY
+        girlTranslationX=girl.translationX
+        girlTranslationY=girl.translationY
+        loaderTranslationX=loader.translationX
+        loaderTranslationY=loader.translationY
 
         sensormanager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gyro=sensormanager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
@@ -59,11 +70,7 @@ class LoginView : AppCompatActivity(), SensorEventListener {
             sign_in_button.cardElevation=0f
             sign_in_button.isEnabled=false
         }
-        if(gyro==null){
-            Toast.makeText(this, "Gyroscope Not Supported", Toast.LENGTH_LONG).show()
-        }else{
-            //Toast.makeText(this, "Ready to Bang Bang $gyro", Toast.LENGTH_LONG).show()
-        }
+
         loginViewModel.TokenLiveData.observe(this, Observer {
                 if(it!=null){}
                     //startActivity(Intent(this, MainActivity::class.java))
@@ -83,14 +90,21 @@ class LoginView : AppCompatActivity(), SensorEventListener {
                 sign_in_button.isEnabled=true
             }
         })
+
+        /*loginViewModel.transformXAddition.observe(this, Observer {
+            imageView2.animate().translationY(imageView2TranslationY+it).duration=100
+            view.animate().translationY(viewTranslationY+it).duration=100
+            girl.animate().translationY(girlTranslationY+it).duration=100
+            loader.animate().translationY(loaderTranslationY+it).duration=100
+        })
+        loginViewModel.transformYAddition.observe(this, Observer {
+            imageView2.animate().translationX(imageView2TranslationX+it).duration=100
+            view.animate().translationX(viewTranslationX+it).duration=100
+            girl.animate().translationX(girlTranslationX+it).duration=100
+            loader.animate().translationX(loaderTranslationX+it).duration=100
+        })*/
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        sensormanager.registerListener(this, gyro, SensorManager.SENSOR_DELAY_NORMAL)
-
-    }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         girl.visibility= View.GONE
@@ -100,36 +114,43 @@ class LoginView : AppCompatActivity(), SensorEventListener {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int){
+    override fun onResume() {
+        super.onResume()
+        sensormanager.registerListener(this, gyro, SensorManager.SENSOR_DELAY_NORMAL)
     }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        if(timestamp!=0f){
-            var timeelapsed=(event!!.timestamp.toFloat() - timestamp)/1000000000
-            var rotationAroundX: Float = event.values[0]
-            var rotationAroundY:Float =event.values[1]
-            cummulativeRotationAroundX+=rotationAroundX*timeelapsed
-            cummulativeRotationAroundY+=rotationAroundY*timeelapsed
-
-            imageView2.translationY=(imageView2TranslationY+ 50*sin(cummulativeRotationAroundX))
-            imageView2.translationX=(imageView2TranslationX+ 50*sin(cummulativeRotationAroundY))
-            view.translationY=(viewTranslationY+50* sin(cummulativeRotationAroundX))
-            view.translationX=(viewTranslationX+50*sin(cummulativeRotationAroundY))
-            girl.translationY=(girlTranslationY+50*sin(cummulativeRotationAroundX))
-            girl.translationX=(girlTranslationX+50*sin(cummulativeRotationAroundY))
-            loader.translationY=(loaderTranslationY+50*sin(cummulativeRotationAroundX))
-            loader.translationX=(loaderTranslationX+50*sin(cummulativeRotationAroundY))
-        }
-        timestamp=event!!.timestamp.toFloat()
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()
         loginViewModel.clearDisposables()
+        sensormanager.unregisterListener(this)
     }
 
-    companion object {
-        const val TAG: String = "LoginView"
+
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        //loginViewModel.SensorDataComputation(event)
+            if(timestamp!=0f){
+            cummulativeRotationAroundX += event!!.values[0] * (event.timestamp - timestamp) / 1000000000
+            cummulativeRotationAroundY += event.values[1] * (event.timestamp - timestamp) / 1000000000
+            }
+            timestamp=event!!.timestamp.toFloat()
+        imageView2.animate().translationY(imageView2TranslationY+50*sin(cummulativeRotationAroundX)).duration=100
+        imageView.animate().translationY(imageViewTranslationY+25*sin(cummulativeRotationAroundX)).duration=50
+        view.animate().translationY(viewTranslationY+50*sin(cummulativeRotationAroundX)).duration=100
+        girl.animate().translationY(girlTranslationY+50*sin(cummulativeRotationAroundX)).duration=100
+        loader.animate().translationY(loaderTranslationY+50*sin(cummulativeRotationAroundX)).duration=100
+
+        imageView2.animate().translationX(imageView2TranslationX+ 50*sin(cummulativeRotationAroundY)).duration=100
+        imageView.animate().translationX((imageViewTranslationX+25*sin(cummulativeRotationAroundY))).duration=50
+        view.animate().translationX(viewTranslationX+50*sin(cummulativeRotationAroundY)).duration=100
+        girl.animate().translationX(girlTranslationX+50*sin(cummulativeRotationAroundY)).duration=100
+        loader.animate().translationX(loaderTranslationX+50*sin(cummulativeRotationAroundY)).duration=100
+
+
+
     }
 }

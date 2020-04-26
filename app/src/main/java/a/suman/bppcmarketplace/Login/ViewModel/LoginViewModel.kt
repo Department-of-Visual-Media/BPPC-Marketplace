@@ -3,6 +3,7 @@ package a.suman.bppcmarketplace.Login.ViewModel
 import a.suman.bppcmarketplace.Login.Model.LoginRepository
 import android.app.Application
 import android.content.Intent
+import android.hardware.SensorEvent
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -16,6 +17,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         LoginRepository(application)
     val TokenLiveData= liveData{emitSource(repo.backendTokenLiveData) }
     val LoginStatusLiveData= liveData {emitSource(repo.loginStatusLiveData)}
+    //val transformXAddition= liveData{ emitSource(repo.sensorDataX) }
+   // val transformYAddition= liveData{emitSource(repo.sensorDataY)}
 
 
     fun initGoogleSignIn(): Intent {
@@ -31,7 +34,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             //
         }
     }
-
+    fun SensorDataComputation(event:SensorEvent?){
+     repo.updateSensorData(event)
+    }
 
     fun clearDisposables() {
         repo.clearDisposables()
