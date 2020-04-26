@@ -138,17 +138,17 @@ class LoginView : AppCompatActivity(), SensorEventListener {
             cummulativeRotationAroundY += event.values[1] * (event.timestamp - timestamp) / 1000000000
             }
             timestamp=event!!.timestamp.toFloat()
-        imageView2.animate().translationY(imageView2TranslationY+50*sin(cummulativeRotationAroundX)).duration=100
-        imageView.animate().translationY(imageViewTranslationY+25*sin(cummulativeRotationAroundX)).duration=50
-        view.animate().translationY(viewTranslationY+50*sin(cummulativeRotationAroundX)).duration=100
-        girl.animate().translationY(girlTranslationY+50*sin(cummulativeRotationAroundX)).duration=100
-        loader.animate().translationY(loaderTranslationY+50*sin(cummulativeRotationAroundX)).duration=100
+        imageView2.animate().translationY(imageView2TranslationY+50*sin(cummulativeRotationAroundX)).duration=500
+        imageView.animate().translationY(imageViewTranslationY+25*sin(cummulativeRotationAroundX)).duration=500
+        view.animate().translationY(viewTranslationY+50*sin(cummulativeRotationAroundX)).duration=500
+        girl.animate().translationY(girlTranslationY+50*sin(cummulativeRotationAroundX)).duration=500
+        loader.animate().translationY(loaderTranslationY+50*sin(cummulativeRotationAroundX)).duration=500
 
-        imageView2.animate().translationX(imageView2TranslationX+ 50*sin(cummulativeRotationAroundY)).duration=100
-        imageView.animate().translationX((imageViewTranslationX+25*sin(cummulativeRotationAroundY))).duration=50
-        view.animate().translationX(viewTranslationX+50*sin(cummulativeRotationAroundY)).duration=100
-        girl.animate().translationX(girlTranslationX+50*sin(cummulativeRotationAroundY)).duration=100
-        loader.animate().translationX(loaderTranslationX+50*sin(cummulativeRotationAroundY)).duration=100
+        imageView2.animate().translationX(imageView2TranslationX+ 50*sin(cummulativeRotationAroundY)).duration=500
+        imageView.animate().translationX((imageViewTranslationX+25*sin(cummulativeRotationAroundY))).duration=500
+        view.animate().translationX(viewTranslationX+50*sin(cummulativeRotationAroundY)).duration=500
+        girl.animate().translationX(girlTranslationX+50*sin(cummulativeRotationAroundY)).duration=500
+        loader.animate().translationX(loaderTranslationX+50*sin(cummulativeRotationAroundY)).duration=500
 
 
 
