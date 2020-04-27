@@ -1,11 +1,9 @@
-package a.suman.bppcmarketplace.Login.Model
+package a.suman.bppcmarketplace.Login.Model.Network
 
 
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 class RetrofitClient private constructor() {
     private val retrofit: Retrofit
@@ -19,7 +17,8 @@ class RetrofitClient private constructor() {
         var instance: RetrofitClient? = null
             get() {
                 if (field == null) {
-                    field = RetrofitClient()
+                    field =
+                        RetrofitClient()
                 }
                 return field
             }
