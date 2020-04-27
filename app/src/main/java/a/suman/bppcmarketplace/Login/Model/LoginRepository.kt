@@ -3,11 +3,8 @@ package a.suman.bppcmarketplace.Login.Model
 import a.suman.bppcmarketplace.R
 import android.app.Application
 import android.content.Intent
-import android.content.SharedPreferences
-import android.hardware.SensorEvent
 import android.preference.PreferenceManager
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -16,12 +13,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
-import kotlin.math.sin
+
 
 class LoginRepository(application: Application) {
     private val RC_SIGN_IN = 1
@@ -32,9 +27,6 @@ class LoginRepository(application: Application) {
     private var backendTokenMutableLiveData: MutableLiveData<String> = MutableLiveData()
     val backendTokenLiveData= liveData {emitSource(backendTokenMutableLiveData) }
 
-    //val sensorDataComputation=SensorDataComputation()
-    //val sensorDataX = liveData {emitSource(sensorDataComputation.sensorDataX)}
-    //val sensorDataY = liveData {emitSource((sensorDataComputation.sensorDataY))}
 
     private var loginStatusMutableLiveData = MutableLiveData<String>()
     val loginStatusLiveData = liveData{ emitSource(loginStatusMutableLiveData)}
@@ -44,9 +36,6 @@ class LoginRepository(application: Application) {
     backendTokenMutableLiveData.postValue(getDataFromSharedPref(TOKEN_TAG, application))
     }
 
-    fun updateSensorData(event:SensorEvent?){
-        //sensorDataComputation.doInBackground(event)
-    }
 
     fun getGoogleSignInIntent(): Intent {
 

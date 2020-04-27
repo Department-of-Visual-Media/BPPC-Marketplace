@@ -28,14 +28,10 @@ class LoginView : AppCompatActivity(), SensorEventListener {
     var cummulativeRotationAroundX:Float=0f
     var cummulativeRotationAroundY:Float=0f
 
-    var imageView2TranslationX:Float=0f
-    var imageView2TranslationY:Float=0f
+    var imageview5TranslationX:Float=0f
+    var imageview5TranslationY:Float=0f
     var viewTranslationX:Float=0f
      var viewTranslationY:Float=0f
-     var girlTranslationX:Float=0f
-     var girlTranslationY:Float=0f
-     var loaderTranslationX:Float=0f
-     var loaderTranslationY:Float=0f
     var imageViewTranslationX:Float=0f
     var imageViewTranslationY:Float=0f
 
@@ -47,16 +43,13 @@ class LoginView : AppCompatActivity(), SensorEventListener {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
-        imageView2TranslationX=imageView2.translationX
-        imageView2TranslationY=imageView2.translationY
+        imageview5TranslationX=imageview5.translationX
+        imageview5TranslationY=imageview5.translationY
         imageViewTranslationX=imageView.translationX
         imageViewTranslationY=imageView.translationX
         viewTranslationX=view.translationX
         viewTranslationY=view.translationY
-        girlTranslationX=girl.translationX
-        girlTranslationY=girl.translationY
-        loaderTranslationX=loader.translationX
-        loaderTranslationY=loader.translationY
+
 
         sensormanager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gyro=sensormanager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
@@ -73,7 +66,7 @@ class LoginView : AppCompatActivity(), SensorEventListener {
 
         loginViewModel.TokenLiveData.observe(this, Observer {
                 if(it!=null){}
-                    //startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, MainActivity::class.java))
                 }
             )
 
@@ -91,18 +84,7 @@ class LoginView : AppCompatActivity(), SensorEventListener {
             }
         })
 
-        /*loginViewModel.transformXAddition.observe(this, Observer {
-            imageView2.animate().translationY(imageView2TranslationY+it).duration=100
-            view.animate().translationY(viewTranslationY+it).duration=100
-            girl.animate().translationY(girlTranslationY+it).duration=100
-            loader.animate().translationY(loaderTranslationY+it).duration=100
-        })
-        loginViewModel.transformYAddition.observe(this, Observer {
-            imageView2.animate().translationX(imageView2TranslationX+it).duration=100
-            view.animate().translationX(viewTranslationX+it).duration=100
-            girl.animate().translationX(girlTranslationX+it).duration=100
-            loader.animate().translationX(loaderTranslationX+it).duration=100
-        })*/
+
     }
 
 
@@ -132,25 +114,20 @@ class LoginView : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        //loginViewModel.SensorDataComputation(event)
-            if(timestamp!=0f){
+
+        //This is implemented in View to reduce the tiny latency due to transfer of data through Streams such as LiveData
+        if(timestamp!=0f){
             cummulativeRotationAroundX += event!!.values[0] * (event.timestamp - timestamp) / 1000000000
             cummulativeRotationAroundY += event.values[1] * (event.timestamp - timestamp) / 1000000000
             }
             timestamp=event!!.timestamp.toFloat()
-        imageView2.animate().translationY(imageView2TranslationY+50*sin(cummulativeRotationAroundX)).duration=500
-        imageView.animate().translationY(imageViewTranslationY+25*sin(cummulativeRotationAroundX)).duration=500
-        view.animate().translationY(viewTranslationY+50*sin(cummulativeRotationAroundX)).duration=500
-        girl.animate().translationY(girlTranslationY+50*sin(cummulativeRotationAroundX)).duration=500
-        loader.animate().translationY(loaderTranslationY+50*sin(cummulativeRotationAroundX)).duration=500
+        imageView2.animate().translationY(imageview5TranslationY+80*sin(cummulativeRotationAroundX)).duration=500
+        imageView.animate().translationY(imageViewTranslationY+30*sin(cummulativeRotationAroundX)).duration=500
+        view.animate().translationY(viewTranslationY+80*sin(cummulativeRotationAroundX)).duration=500
 
-        imageView2.animate().translationX(imageView2TranslationX+ 50*sin(cummulativeRotationAroundY)).duration=500
-        imageView.animate().translationX((imageViewTranslationX+25*sin(cummulativeRotationAroundY))).duration=500
-        view.animate().translationX(viewTranslationX+50*sin(cummulativeRotationAroundY)).duration=500
-        girl.animate().translationX(girlTranslationX+50*sin(cummulativeRotationAroundY)).duration=500
-        loader.animate().translationX(loaderTranslationX+50*sin(cummulativeRotationAroundY)).duration=500
-
-
+        imageView2.animate().translationX(imageview5TranslationX+ 80*sin(cummulativeRotationAroundY)).duration=500
+        imageView.animate().translationX((imageViewTranslationX+30*sin(cummulativeRotationAroundY))).duration=500
+        view.animate().translationX(viewTranslationX+80*sin(cummulativeRotationAroundY)).duration=500
 
     }
 }

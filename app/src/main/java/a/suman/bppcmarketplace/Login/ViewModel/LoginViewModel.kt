@@ -17,8 +17,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         LoginRepository(application)
     val TokenLiveData= liveData{emitSource(repo.backendTokenLiveData) }
     val LoginStatusLiveData= liveData {emitSource(repo.loginStatusLiveData)}
-    //val transformXAddition= liveData{ emitSource(repo.sensorDataX) }
-   // val transformYAddition= liveData{emitSource(repo.sensorDataY)}
 
 
     fun initGoogleSignIn(): Intent {
@@ -34,9 +32,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             //
         }
     }
-    fun SensorDataComputation(event:SensorEvent?){
-     repo.updateSensorData(event)
-    }
+
 
     fun clearDisposables() {
         repo.clearDisposables()
