@@ -138,12 +138,16 @@ class LoginView : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        sensormanager.registerListener(this, gyro, SensorManager.SENSOR_DELAY_NORMAL)
+        if(gyro!=null){
+            sensormanager.registerListener(this, gyro, SensorManager.SENSOR_DELAY_NORMAL)
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        sensormanager.unregisterListener(this)
+        if(gyro!=null) {
+            sensormanager.unregisterListener(this)
+        }
     }
 
 
