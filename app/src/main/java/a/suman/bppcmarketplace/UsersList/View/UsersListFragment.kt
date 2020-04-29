@@ -1,7 +1,6 @@
 package a.suman.bppcmarketplace.UsersList.View
 
 import a.suman.bppcmarketplace.R
-import android.content.res.Resources
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.graphics.drawable.Drawable
@@ -14,10 +13,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_users_list.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class UsersListFragment : Fragment() {
 
-
+    var animation:Job= Job()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +33,13 @@ class UsersListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fillCustomGradient(view.findViewById(R.id.appbar_users_list))
+        animation= MainScope().launch {
+            while(true){noInternetUser.animate().alpha(0f).duration = 500
+                delay(500)
+                noInternetUser.animate().alpha(1f).duration = 500
+                delay(600)
+            }
+        }
     }
 
     private fun fillCustomGradient(v: View) {
@@ -56,6 +67,11 @@ class UsersListFragment : Fragment() {
         layers[0] = p as Drawable
         val composite = LayerDrawable(layers)
         v.background= composite
+    }
+
+    override fun onStop() {
+        super.onStop()
+        animation.cancel()
     }
 
 }

@@ -13,10 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
-import io.reactivex.Completable
-import io.reactivex.CompletableObserver
-import io.reactivex.CompletableSource
-import io.reactivex.Flowable
+import io.reactivex.*
 import io.reactivex.schedulers.Schedulers
 
 
@@ -58,12 +55,13 @@ class LoginRepository(val application: Application) {
                 throw Exception()
             }
         } catch (e: Exception) {
+            Log.d("REPO", "$e")
             return Completable.error(e)
         }
     }
 
-    fun observeForToken():Flowable<BasicUserData>{
-        return authenticationService.getBasicUserData()
+    fun observeForToken(): Single<BasicUserData> {
+        return authenticationService.getBasicUserData().subscribeOn(Schedulers.io())
     }
 
 

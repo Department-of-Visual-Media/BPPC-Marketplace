@@ -14,10 +14,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_product_list.*
+import  android.os.Handler
+import kotlinx.coroutines.*
 
 
 class ProductListFragment : Fragment() {
 
+    var animation:Job=Job()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +32,12 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fillCustomGradient(view.findViewById(R.id.appbar_product_list))
+        animation=MainScope().launch {
+            while(true){noInternetProduct.animate().alpha(0f).duration = 500
+            delay(500)
+            noInternetProduct.animate().alpha(1f).duration = 500
+            delay(600)}
+        }
     }
 
     private fun fillCustomGradient(v: View) {
@@ -56,6 +65,11 @@ class ProductListFragment : Fragment() {
         layers[0] = p as Drawable
         val composite = LayerDrawable(layers)
         v.background =composite
+    }
+
+    override fun onStop() {
+        super.onStop()
+        animation.cancel()
     }
 
 }

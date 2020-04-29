@@ -13,6 +13,8 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.View
 import android.util.Log
+import android.view.animation.Interpolator
+import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -36,6 +38,8 @@ class LoginView : AppCompatActivity(), SensorEventListener {
      var viewTranslationY:Float=0f
     var imageViewTranslationX:Float=0f
     var imageViewTranslationY:Float=0f
+
+    var timeelapsed:Long=0
 
     companion object {
         const val TAG: String = "LoginView"
@@ -91,6 +95,14 @@ class LoginView : AppCompatActivity(), SensorEventListener {
                 sign_in_button.isEnabled=true
                 Toast.makeText(this, "Google Sign In Failed", Toast.LENGTH_LONG).show()
             }
+            if(it=="Server Error"){
+                girl.visibility= View.VISIBLE
+                loader.visibility=View.GONE
+                progressBar.visibility=View.GONE
+                sign_in_button.cardElevation=5f
+                sign_in_button.isEnabled=true
+                Toast.makeText(this, "Server is under maintenance", Toast.LENGTH_LONG).show()
+            }
         })
 
         loginViewModel.loginToken.observe(this, Observer {
@@ -134,18 +146,32 @@ class LoginView : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
 
         //This is implemented in View to reduce the tiny latency due to transfer of data through LiveData
-        if(timestamp!=0f){
-            cummulativeRotationAroundX += event!!.values[0] * (event.timestamp - timestamp) / 1000000000
-            cummulativeRotationAroundY += event.values[1] * (event.timestamp - timestamp) / 1000000000
-            }
-            timestamp=event!!.timestamp.toFloat()
-        imageView2.animate().translationY(imageview5TranslationY+80*sin(cummulativeRotationAroundX)).duration=500
-        imageView.animate().translationY(imageViewTranslationY+30*sin(cummulativeRotationAroundX)).duration=500
-        view.animate().translationY(viewTranslationY+80*sin(cummulativeRotationAroundX)).duration=500
+        if(timestamp!=0f) {
+            timeelapsed = (event!!.timestamp - timestamp).toLong()/1000000
+            cummulativeRotationAroundX += event!!.values[0] * timeelapsed/1000
+            cummulativeRotationAroundY += event.values[1] * timeelapsed/1000
 
-        imageView2.animate().translationX(imageview5TranslationX+ 80*sin(cummulativeRotationAroundY)).duration=500
-        imageView.animate().translationX((imageViewTranslationX+30*sin(cummulativeRotationAroundY))).duration=500
-        view.animate().translationX(viewTranslationX+80*sin(cummulativeRotationAroundY)).duration=500
 
+            imageview5.animate()
+                .translationY(imageview5TranslationY + 20 * sin(cummulativeRotationAroundX)).duration =
+                timeelapsed
+            imageView.animate()
+                .translationY(imageViewTranslationY + 5 * sin(cummulativeRotationAroundX)).duration =
+                timeelapsed
+            view.animate()
+                .translationY(viewTranslationY + 20 * sin(cummulativeRotationAroundX)).duration =
+                timeelapsed
+
+            imageview5.animate()
+                .translationX(imageview5TranslationX + 20 * sin(cummulativeRotationAroundY)).duration =
+                timeelapsed
+            imageView.animate()
+                .translationX((imageViewTranslationX + 5 * sin(cummulativeRotationAroundY))).duration =
+                timeelapsed
+            view.animate()
+                .translationX(viewTranslationX + 20 * sin(cummulativeRotationAroundY)).duration =
+                timeelapsed
+        }
+        timestamp = event!!.timestamp.toFloat()
     }
 }
