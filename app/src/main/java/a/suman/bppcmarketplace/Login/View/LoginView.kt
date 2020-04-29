@@ -32,14 +32,18 @@ class LoginView : AppCompatActivity(), SensorEventListener {
     var cummulativeRotationAroundX:Float=0f
     var cummulativeRotationAroundY:Float=0f
 
-    var imageview5TranslationX:Float=0f
-    var imageview5TranslationY:Float=0f
-    var viewTranslationX:Float=0f
-     var viewTranslationY:Float=0f
+
     var imageViewTranslationX:Float=0f
     var imageViewTranslationY:Float=0f
+    var imageView2TranslationX:Float=0f
+    var imageView2TranslationY:Float=0f
+    var imageView3TranslationX:Float=0f
+    var imageView3TranslationY:Float=0f
+    var imageView4TranslationX:Float=0f
+    var imageView4TranslationY:Float=0f
 
     var timeelapsed:Long=0
+    var timeelapsedf:Float=0f
 
     companion object {
         const val TAG: String = "LoginView"
@@ -49,12 +53,16 @@ class LoginView : AppCompatActivity(), SensorEventListener {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
-        imageview5TranslationX=imageview5.translationX
-        imageview5TranslationY=imageview5.translationY
+
         imageViewTranslationX=imageView.translationX
-        imageViewTranslationY=imageView.translationX
-        viewTranslationX=view.translationX
-        viewTranslationY=view.translationY
+        imageViewTranslationY=imageView.translationY
+        imageView2TranslationX=imageView2.translationX
+        imageView2TranslationY=imageView2.translationY
+        imageView3TranslationX=imageView3.translationX
+        imageView3TranslationY=imageView3.translationY
+        imageView4TranslationX=imageView4.translationX
+        imageView4TranslationY=imageView4.translationY
+
 
 
         sensormanager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -148,29 +156,37 @@ class LoginView : AppCompatActivity(), SensorEventListener {
         //This is implemented in View to reduce the tiny latency due to transfer of data through LiveData
         if(timestamp!=0f) {
             timeelapsed = (event!!.timestamp - timestamp).toLong()/1000000
-            cummulativeRotationAroundX += event!!.values[0] * timeelapsed/1000
-            cummulativeRotationAroundY += event.values[1] * timeelapsed/1000
+            timeelapsedf = (event!!.timestamp.toFloat() - timestamp)/1000000000
+            cummulativeRotationAroundX += event!!.values[0] * timeelapsedf
+            cummulativeRotationAroundY += event.values[1] * timeelapsedf
 
 
-            imageview5.animate()
-                .translationY(imageview5TranslationY + 20 * sin(cummulativeRotationAroundX)).duration =
-                timeelapsed
             imageView.animate()
-                .translationY(imageViewTranslationY + 5 * sin(cummulativeRotationAroundX)).duration =
+                .translationY(imageViewTranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
                 timeelapsed
-            view.animate()
-                .translationY(viewTranslationY + 20 * sin(cummulativeRotationAroundX)).duration =
+            imageView2.animate()
+                .translationY(imageView2TranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
+                timeelapsed
+            imageView3.animate()
+                .translationY(imageView3TranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
+                timeelapsed
+            imageView4.animate()
+                .translationY(imageView4TranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
                 timeelapsed
 
-            imageview5.animate()
-                .translationX(imageview5TranslationX + 20 * sin(cummulativeRotationAroundY)).duration =
-                timeelapsed
             imageView.animate()
-                .translationX((imageViewTranslationX + 5 * sin(cummulativeRotationAroundY))).duration =
+                .translationX((imageViewTranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
                 timeelapsed
-            view.animate()
-                .translationX(viewTranslationX + 20 * sin(cummulativeRotationAroundY)).duration =
+            imageView2.animate()
+                .translationX((imageView2TranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
                 timeelapsed
+            imageView3.animate()
+                .translationX((imageView3TranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
+                timeelapsed
+            imageView4.animate()
+                .translationX((imageView4TranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
+                timeelapsed
+
         }
         timestamp = event!!.timestamp.toFloat()
     }

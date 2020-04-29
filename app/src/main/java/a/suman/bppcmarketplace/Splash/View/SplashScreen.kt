@@ -11,6 +11,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Handler
+import android.util.Log
 
 class SplashScreen : AppCompatActivity() {
 
@@ -39,9 +40,7 @@ class SplashScreen : AppCompatActivity() {
                 } else {
                     Handler().postDelayed(
                         { startActivity(Intent(this, LoginView::class.java)) },
-                        1000
-                    )
-
+                        1000)
                 }
             } else {
                 if (it != null) {
