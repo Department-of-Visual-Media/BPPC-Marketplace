@@ -13,6 +13,7 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.View
 import android.util.Log
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
@@ -160,33 +161,38 @@ class LoginView : AppCompatActivity(), SensorEventListener {
             cummulativeRotationAroundX += event!!.values[0] * timeelapsedf
             cummulativeRotationAroundY += event.values[1] * timeelapsedf
 
-
+            if(cummulativeRotationAroundX<Math.PI/2 && cummulativeRotationAroundX>(-Math.PI/2)) {
+                imageView.animate()
+                    .translationY(imageViewTranslationY + 80 * sin(cummulativeRotationAroundX))
+                    .setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                    timeelapsed * 2
+                imageView2.animate()
+                    .translationY(imageView2TranslationY + 60 * sin(cummulativeRotationAroundX))
+                    .setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                    timeelapsed * 2
+                imageView3.animate()
+                    .translationY(imageView3TranslationY + 80 * sin(cummulativeRotationAroundX))
+                    .setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                    timeelapsed * 2
+                imageView4.animate()
+                    .translationY(imageView4TranslationY + 80 * sin(cummulativeRotationAroundX))
+                    .setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                    timeelapsed * 2
+            }
+            if(cummulativeRotationAroundY<Math.PI/2 && cummulativeRotationAroundY>(-Math.PI/2)){
             imageView.animate()
-                .translationY(imageViewTranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
-                timeelapsed
+                .translationX((imageViewTranslationX + 80 * sin(cummulativeRotationAroundY))).setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                timeelapsed*2
             imageView2.animate()
-                .translationY(imageView2TranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
-                timeelapsed
+                .translationX((imageView2TranslationX + 60 * sin(cummulativeRotationAroundY))).setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                timeelapsed*2
             imageView3.animate()
-                .translationY(imageView3TranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
-                timeelapsed
+                .translationX((imageView3TranslationX + 80 * sin(cummulativeRotationAroundY))).setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                timeelapsed*2
             imageView4.animate()
-                .translationY(imageView4TranslationY - 30 * sin(cummulativeRotationAroundX)).duration =
-                timeelapsed
-
-            imageView.animate()
-                .translationX((imageViewTranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
-                timeelapsed
-            imageView2.animate()
-                .translationX((imageView2TranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
-                timeelapsed
-            imageView3.animate()
-                .translationX((imageView3TranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
-                timeelapsed
-            imageView4.animate()
-                .translationX((imageView4TranslationX - 30 * sin(cummulativeRotationAroundY))).duration =
-                timeelapsed
-
+                .translationX((imageView4TranslationX + 80 * sin(cummulativeRotationAroundY))).setInterpolator(AccelerateDecelerateInterpolator()).duration =
+                timeelapsed*2
+            }
         }
         timestamp = event!!.timestamp.toFloat()
     }
