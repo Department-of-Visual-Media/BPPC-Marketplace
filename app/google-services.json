@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "571290843607",
+    "firebase_url": "https://bppc-marketplace-274208.firebaseio.com",
+    "project_id": "bppc-marketplace-274208",
+    "storage_bucket": "bppc-marketplace-274208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571290843607:android:b5ae6eab1813c6afc17392",
+        "android_client_info": {
+          "package_name": "a.suman.bppcmarketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "571290843607-mo9f09lf9k3ca67thi42b9nojrje5613.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "a.suman.bppcmarketplace",
+            "certificate_hash": "e5acc99f28c73f75e06c6972e8ed2d5ec1f5582b"
+          }
+        },
+        {
+          "client_id": "571290843607-b5fendqqb9ph1b323uc39vsvjacntea1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApHkIr4SyOMoH4Yh4QN5IQq5xTSdOc5v8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "571290843607-b5fendqqb9ph1b323uc39vsvjacntea1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
