@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
+import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.*
 import io.reactivex.schedulers.Schedulers
 
@@ -22,6 +23,7 @@ class LoginRepository(val application: Application) {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private val apiInstance=RetrofitClient.instance!!.api
+
     private val authenticationService =BPPCDatabase.getBPPCDatabase(application).getAuthenticationServices()
 
 
@@ -49,6 +51,8 @@ class LoginRepository(val application: Application) {
                 Log.d("REPO", "${account.displayName}")
                 val googleSignInToken = account.idToken.toString()
                  return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io()).flatMapCompletable {
+                     val auth=FirebaseAuth.getInstance()
+                     auth.signInAnonymously()
                      authenticationService.insertBasicUserData(it).doOnComplete{}
                  }
             }else{
@@ -60,7 +64,7 @@ class LoginRepository(val application: Application) {
         }
     }
 
-    fun observeForToken(): Single<BasicUserData> {
+    fun observeForToken(): Single<List<BasicUserData?>> {
         return authenticationService.getBasicUserData().subscribeOn(Schedulers.io())
     }
 

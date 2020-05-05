@@ -11,9 +11,16 @@ import androidx.lifecycle.liveData
 class SplashViewModel (application:Application):AndroidViewModel(application){
 
     private val splashRepository= SplashRepository(application)
-    private val authenticationMLiveData= MutableLiveData <BasicUserData>()
-    val authenticationLiveData= liveData{ emitSource(authenticationMLiveData) }
-    private val disposable= splashRepository.getAuthenitcation().subscribe ({ authenticationMLiveData.postValue(it)},{ })
+    private val authenticationMLiveData= MutableLiveData <BasicUserData?>()
+    val authenticationLiveData= liveData{ emitSource(authenticationMLiveData)
+    }
+       val disposable = splashRepository.getAuthenitcation().subscribe({
+            if (it.size == 1) {
+                authenticationMLiveData.postValue(it[0])
+            } else {
+                authenticationMLiveData.postValue(null)
+            }
+        }, {})
 
 
     override fun onCleared() {

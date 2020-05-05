@@ -24,7 +24,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val statusLiveData: MutableLiveData<String> = MutableLiveData()
     val loginStatus= liveData {emitSource(statusLiveData) }
 
-    private val loginTokenMutable =MutableLiveData<BasicUserData>()
+    private val loginTokenMutable =MutableLiveData<BasicUserData?>()
     val loginToken = liveData {emitSource(loginTokenMutable)  }
 
 
@@ -38,11 +38,18 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             RC_SIGN_IN -> {
                 compositeDisposable.add(repo.googleSignInComplete(data).subscribe({
                     statusLiveData.postValue("Success")
-                   compositeDisposable.add(repo.observeForToken().subscribe({loginTokenMutable.postValue(it)},{ }))
+                   compositeDisposable.add(repo.observeForToken().subscribe({
+                       if (it.size>0){
+                       loginTokenMutable.postValue(it[0])}},{ }))
                 }, {
                     Log.d("ViewModel", "$it")
                     if(it is ApiException){
+                        if(it.statusCode==12500){
+                            statusLiveData.postValue("BitsMail")
+                        }
+                        if(it.statusCode==7){
                         statusLiveData.postValue("Internet")
+                        }
                     }else if(it is HttpException){
                     statusLiveData.postValue("Server Error")
                     }else{

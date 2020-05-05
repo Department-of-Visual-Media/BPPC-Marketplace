@@ -15,16 +15,17 @@ import android.util.Log
 
 class SplashScreen : AppCompatActivity() {
 
-    lateinit var splashViewModel: SplashViewModel
+    //lateinit var splashViewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         val itime = System.currentTimeMillis()
-        splashViewModel =
-            ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
+        val splashViewModel =
+            ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(
                 SplashViewModel::class.java
             )
+
         splashViewModel.authenticationLiveData.observe(this, Observer {
             val ftime = System.currentTimeMillis()
             if ((ftime - itime) < 2000) {
@@ -33,13 +34,16 @@ class SplashScreen : AppCompatActivity() {
                     Handler().postDelayed({
                         if (it.isNew) {
                             startActivity(Intent(this, NewUser::class.java))
+                            finish()
                         } else {
                             startActivity(Intent(this, MainActivity::class.java))
+                            finish()
                         }
                     }, 1000)
                 } else {
                     Handler().postDelayed(
-                        { startActivity(Intent(this, LoginView::class.java)) },
+                        { startActivity(Intent(this, LoginView::class.java))
+                            finish()},
                         1000)
                 }
             } else {
@@ -47,11 +51,14 @@ class SplashScreen : AppCompatActivity() {
                     //splashViewModel.updateData()
                     if (it.isNew) {
                         startActivity(Intent(this, NewUser::class.java))
+                        finish()
                     } else {
                         startActivity(Intent(this, MainActivity::class.java))
+                        finish()
                     }
                 } else {
                     startActivity(Intent(this, LoginView::class.java))
+                    finish()
                 }
             }
         })

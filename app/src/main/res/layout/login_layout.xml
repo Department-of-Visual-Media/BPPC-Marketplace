@@ -116,6 +116,7 @@
                 android:layout_height="match_parent"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
+                android:alpha="0"
                 app:lottie_rawRes="@raw/girl_on_work"
                 app:lottie_speed="0.5" />
 
@@ -124,6 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
+                android:alpha="0"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/loader_ball" />
