@@ -7,7 +7,7 @@
         android:id="@+id/products"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Products"
-        app:cnb_iconColor="#3F51B5"/>
+        app:cnb_iconColor="@color/colorPrimaryDark"/>
     <item
         android:id="@+id/users"
         android:icon="@drawable/ic_group_black_24dp"
@@ -17,17 +17,17 @@
         android:id="@+id/upload"
         android:icon="@drawable/ic_add_a_photo_black_24dp"
         android:title="Upload"
-        app:cnb_iconColor="#FFC107"/>
+        app:cnb_iconColor="#AA9110"/>
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_person_outline_black_24dp"
         android:title="Profile"
-        app:cnb_iconColor="#36D1DC"/>
+        app:cnb_iconColor="#5B86E5"/>
     <item
         android:id="@+id/chat"
         android:icon="@drawable/ic_chat_black_24dp"
         android:title="Chat"
-        app:cnb_iconColor="#673AB7"/>
+        app:cnb_iconColor="#670A27"/>
 
 
 
