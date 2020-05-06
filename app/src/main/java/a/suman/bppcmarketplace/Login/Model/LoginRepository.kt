@@ -13,8 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
-import com.google.firebase.auth.FirebaseAuth
-import io.reactivex.*
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 
@@ -51,8 +51,8 @@ class LoginRepository(val application: Application) {
                 Log.d("REPO", "${account.displayName}")
                 val googleSignInToken = account.idToken.toString()
                  return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io()).flatMapCompletable {
-                     val auth=FirebaseAuth.getInstance()
-                     auth.signInAnonymously()
+//                    val auth=FirebaseAuth.getInstance()
+//                   auth.signInAnonymously()
                      authenticationService.insertBasicUserData(it).doOnComplete{}
                  }
             }else{
