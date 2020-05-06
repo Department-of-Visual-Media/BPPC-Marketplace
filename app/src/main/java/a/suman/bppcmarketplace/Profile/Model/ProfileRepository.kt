@@ -1,4 +1,13 @@
 package a.suman.bppcmarketplace.Profile.Model
 
-class ProfileRepository {
+
+import android.app.Application
+
+
+class ProfileRepository(application: Application) {
+
+
+
+
+
 }

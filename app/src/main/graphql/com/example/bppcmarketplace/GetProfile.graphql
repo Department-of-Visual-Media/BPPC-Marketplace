@@ -1,0 +1,10 @@
+query GetProfile($id:Int){
+    profile(id:$id){
+        id
+        name
+        hostel
+        email
+        contactNo
+
+    }
+}
