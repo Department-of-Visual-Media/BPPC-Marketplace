@@ -6,25 +6,28 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [BasicUserData::class], version = 1, exportSchema = false)
-abstract class BPPCDatabase:RoomDatabase(){
- abstract fun getAuthenticationServices():AuthenticationServices
+abstract class BPPCDatabase : RoomDatabase() {
+    abstract fun getAuthenticationServices(): AuthenticationServices
 
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE:BPPCDatabase?=null
+        private var INSTANCE: BPPCDatabase? = null
 
-        fun getBPPCDatabase(application: Application):BPPCDatabase{
-            val instance= INSTANCE
-            if(instance!=null) {
+        @Synchronized
+        fun getBPPCDatabase(application: Application): BPPCDatabase {
+            val instance = INSTANCE
+            if (instance != null) {
                 return instance
             }
-            synchronized(this){
-                val instance2 = Room.databaseBuilder(application.applicationContext,
+
+            val instance2 = Room.databaseBuilder(
+                application.applicationContext,
                 BPPCDatabase::class.java,
-                "BPPCDatabase").build()
-                INSTANCE=instance2
-                return instance2
-            }
+                "BPPCDatabase"
+            ).build()
+            INSTANCE = instance2
+            return instance2
+
         }
     }
 
