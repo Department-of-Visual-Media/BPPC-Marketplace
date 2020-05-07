@@ -22,10 +22,10 @@ class LoginRepository(val application: Application) {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    private val apiInstance=RetrofitClient.instance!!.api
+    private val apiInstance = RetrofitClient.instance!!.api
 
-    private val authenticationService =BPPCDatabase.getBPPCDatabase(application).getAuthenticationServices()
-
+    private val authenticationService =
+        BPPCDatabase.getBPPCDatabase(application).getAuthenticationServices()
 
 
     fun getGoogleSignInIntent(): Intent {
@@ -34,7 +34,8 @@ class LoginRepository(val application: Application) {
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(application.getString(R.string.OAuth2_client_id))
                 .requestEmail().requestProfile().requestScopes(
-                    Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
+                    Scope(Scopes.EMAIL), Scope(Scopes.PROFILE)
+                )
                 .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(application.applicationContext, gso)
@@ -50,12 +51,15 @@ class LoginRepository(val application: Application) {
             if (account != null) {
                 Log.d("REPO", "${account.displayName}")
                 val googleSignInToken = account.idToken.toString()
-                 return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io()).flatMapCompletable {
+                return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io())
+                    .flatMapCompletable {
 //                    val auth=FirebaseAuth.getInstance()
 //                   auth.signInAnonymously()
-                     authenticationService.insertBasicUserData(it).doOnComplete{}
-                 }
-            }else{
+                        authenticationService.insertBasicUserData(it).doOnComplete {
+                            Log.i("User Info", it.toString())
+                        }
+                    }
+            } else {
                 throw Exception()
             }
         } catch (e: Exception) {
@@ -67,9 +71,6 @@ class LoginRepository(val application: Application) {
     fun observeForToken(): Single<List<BasicUserData?>> {
         return authenticationService.getBasicUserData().subscribeOn(Schedulers.io())
     }
-
-
-
 
 
 }

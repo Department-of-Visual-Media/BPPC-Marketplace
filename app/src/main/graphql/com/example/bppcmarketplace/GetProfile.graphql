@@ -1,10 +1,9 @@
-query GetProfile($id:Int){
-    profile(id:$id){
+query GetProfile($email:String){
+    profile(email: $email){
         id
         name
         hostel
         email
         contactNo
-
     }
 }
