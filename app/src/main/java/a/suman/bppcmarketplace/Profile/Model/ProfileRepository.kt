@@ -18,12 +18,12 @@ import io.reactivex.schedulers.Schedulers
 
 
 class ProfileRepository(application: Application) {
-    lateinit var token: String
-    lateinit var email: String
-    lateinit var disposable: Disposable
+    private lateinit var token: String
+    private lateinit var email: String
+    private lateinit var disposable: Disposable
     private val profileMutableLiveData = MutableLiveData<UserProfile>()
     val profileLiveData = liveData { emitSource(profileMutableLiveData) }
-    val appDatabase = BPPCDatabase.getBPPCDatabase(application)
+    private val appDatabase = BPPCDatabase.getBPPCDatabase(application)
 
 
     private fun getUserProfileFromServer() {
