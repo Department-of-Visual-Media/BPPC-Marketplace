@@ -44,7 +44,6 @@ class ProfileRepository(application: Application) {
                             RequestHeaders.builder()
                                 .addHeader(
                                     "Authorization",
-                                    //"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJ1c2VybmFtZSI6ImYyMDE5MDExMiIsImV4cCI6MTU4NzcxNTAzNywiZW1haWwiOiJmMjAxOTAxMTJAcGlsYW5pLmJpdHMtcGlsYW5pLmFjLmluIn0.TYAcsBCv_hBykbLjTlEc0spKeKlrImu6NGwT-u3zwHc"
                                     "JWT $token"
                                 )
                                 .build()
@@ -82,5 +81,6 @@ class ProfileRepository(application: Application) {
     fun dispose() {
         disposable.dispose()
     }
+
 
 }

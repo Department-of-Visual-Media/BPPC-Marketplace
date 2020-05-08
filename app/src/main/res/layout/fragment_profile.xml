@@ -35,30 +35,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/editProfileButton"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="#43B0F1"
-            app:cardCornerRadius="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/rubik_medium"
-                android:text="EDIT PROFILE"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
-
-        </androidx.cardview.widget.CardView>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="329dp"
@@ -188,7 +164,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -201,6 +177,7 @@
                 android:id="@+id/postsRecylerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </androidx.cardview.widget.CardView>
 
 
@@ -234,8 +211,10 @@
             android:id="@+id/logOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:cropToPadding="true"
+            android:padding="8dp"
             android:src="@drawable/ic_log_out"
             app:layout_constraintEnd_toEndOf="@+id/background"
             app:layout_constraintTop_toTopOf="@+id/background" />
@@ -383,14 +362,31 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/wishlistIcon"
+            android:id="@+id/wishlistButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:cropToPadding="true"
+            android:padding="8dp"
             android:src="@drawable/ic_wishlist"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/item_bg"
+            android:fontFamily="@font/rubik_medium"
+            android:text="Edit Profile"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

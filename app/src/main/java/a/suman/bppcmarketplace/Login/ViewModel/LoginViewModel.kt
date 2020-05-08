@@ -19,7 +19,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private var repo: LoginRepository =
         LoginRepository(application)
 
-    val compositeDisposable=CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     private val statusLiveData: MutableLiveData<String> = MutableLiveData()
     val loginStatus= liveData {emitSource(statusLiveData) }
@@ -80,5 +80,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         compositeDisposable.dispose()
     }
+
 
 }
