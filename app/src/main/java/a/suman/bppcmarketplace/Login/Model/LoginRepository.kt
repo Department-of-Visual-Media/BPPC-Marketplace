@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
@@ -72,5 +73,10 @@ class LoginRepository(val application: Application) {
         return authenticationService.getBasicUserData().subscribeOn(Schedulers.io())
     }
 
-
+    fun logOut(): Completable {
+        return authenticationService
+            .removeBasicUserData()
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

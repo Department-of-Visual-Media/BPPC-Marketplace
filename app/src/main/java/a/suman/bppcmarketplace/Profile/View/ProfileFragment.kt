@@ -1,7 +1,10 @@
 package a.suman.bppcmarketplace.Profile.View
 
+import a.suman.bppcmarketplace.Login.View.LoginView
+import a.suman.bppcmarketplace.Login.ViewModel.LoginViewModel
 import a.suman.bppcmarketplace.Profile.ViewModel.ProfileViewModel
 import a.suman.bppcmarketplace.R
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
     private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +32,11 @@ class ProfileFragment : Fragment() {
         ).get(ProfileViewModel::class.java)
         profileViewModel.fetchProfile()
 
+        loginViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
+        ).get(LoginViewModel::class.java)
+
         return view
     }
 
@@ -37,12 +46,24 @@ class ProfileFragment : Fragment() {
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
             Log.i("id", it.id.toString())
 
-            nameTextView.setText(it.name)
-            emailTextView.setText(it.email)
-            hostelTextView.setText(it.hostel)
-            contactNoTextView.setText(it.contactNo.toString())
+            nameTextView.text = it.name
+            emailTextView.text = it.email
+            hostelTextView.text = it.hostel
+            contactNoTextView.text = it.contactNo.toString()
+        })
+
+        logOutButton.setOnClickListener {
+            loginViewModel.logOut()
+        }
+
+
+        loginViewModel.loginToken.observe(this, Observer {
+            if (it == null) {
+                startActivity(Intent(activity, LoginView::class.java))
+            }
         })
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

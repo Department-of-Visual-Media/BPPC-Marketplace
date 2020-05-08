@@ -25,7 +25,6 @@ class ProfileRepository(application: Application) {
     val profileLiveData = liveData { emitSource(profileMutableLiveData) }
     private val appDatabase = BPPCDatabase.getBPPCDatabase(application)
 
-
     private fun getUserProfileFromServer() {
 
         disposable = appDatabase.getAuthenticationServices().getBasicUserData()
