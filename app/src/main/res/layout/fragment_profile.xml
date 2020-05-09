@@ -59,12 +59,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/RoomNoTextView"
+                    android:id="@+id/roomNoTextView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/rubik_medium"
-                    android:text="1234"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -133,7 +132,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/rubik_medium"
-                    android:text="SR"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -234,7 +232,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_bold"
-                android:text="Name"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="22sp"
@@ -312,7 +309,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/mobile" />
+                    android:src="@drawable/mobile"
+                    android:visibility="invisible" />
 
 
                 <TextView
@@ -323,7 +321,6 @@
                     android:layout_toRightOf="@id/phoneIcon"
                     android:fontFamily="@font/rubik_light"
 
-                    android:text="1234567890"
                     android:textColor="#E8EEF1" />
             </RelativeLayout>
 
@@ -343,7 +340,8 @@
                     android:layout_height="20dp"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/email"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/emailTextView"
@@ -353,7 +351,6 @@
 
                     android:layout_toEndOf="@id/emailIcon"
                     android:fontFamily="@font/rubik_light"
-                    android:text="f20191234@pilani.bits-pilani.ac.in"
                     android:textAlignment="center"
                     android:textColor="#E8EEF1" />
             </RelativeLayout>

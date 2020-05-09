@@ -25,8 +25,10 @@ class LoginRepository(val application: Application) {
 
     private val apiInstance = RetrofitClient.instance!!.api
 
-    private val authenticationService =
-        BPPCDatabase.getBPPCDatabase(application).getAuthenticationServices()
+    private val bppcDatabase = BPPCDatabase.getBPPCDatabase(application)
+
+    private val authenticationService = bppcDatabase.getAuthenticationServices()
+
 
 
     fun getGoogleSignInIntent(): Intent {

@@ -1,7 +1,7 @@
 package a.suman.bppcmarketplace.Profile.View
 
 import a.suman.bppcmarketplace.Login.View.LoginView
-import a.suman.bppcmarketplace.Login.ViewModel.LoginViewModel
+import a.suman.bppcmarketplace.MainActivityViewModel
 import a.suman.bppcmarketplace.Profile.ViewModel.ProfileViewModel
 import a.suman.bppcmarketplace.R
 import android.app.AlertDialog
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
     private lateinit var profileViewModel: ProfileViewModel
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +34,10 @@ class ProfileFragment : Fragment() {
         ).get(ProfileViewModel::class.java)
         profileViewModel.fetchProfile()
 
-        loginViewModel = ViewModelProvider(
+        mainActivityViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
-        ).get(LoginViewModel::class.java)
+        ).get(MainActivityViewModel::class.java)
 
         return view
     }
@@ -46,12 +46,15 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
-            Log.i("id", it.id.toString())
+            Log.i("Name", it.name)
 
             nameTextView.text = it.name
+            emailIcon.visibility = View.VISIBLE
             emailTextView.text = it.email
             hostelTextView.text = it.hostel
+            phoneIcon.visibility = View.VISIBLE
             contactNoTextView.text = it.contactNo.toString()
+            roomNoTextView.text = it.roomNo.toString()
         })
 
         logOutButton.setOnClickListener {
@@ -59,7 +62,7 @@ class ProfileFragment : Fragment() {
         }
 
 
-        loginViewModel.loginToken.observe(this, Observer {
+        mainActivityViewModel.loginToken.observe(this, Observer {
             if (it == null) {
                 startActivity(Intent(activity, LoginView::class.java))
             }
@@ -81,7 +84,7 @@ class ProfileFragment : Fragment() {
         AlertDialog.Builder(context)
             .setMessage("Are you sure you want to logout?")
             .setPositiveButton("Yes")
-            { _, _ -> loginViewModel.logOut() }
+            { _, _ -> mainActivityViewModel.logOut() }
             .setNegativeButton("No")
             { dialog, _ -> dialog.cancel() }
             .create().show()

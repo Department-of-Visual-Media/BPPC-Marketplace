@@ -138,6 +138,7 @@ class LoginView : AppCompatActivity(), SensorEventListener {
                 startActivity(Intent(this, NewUser::class.java))
                 finish()
             }else{
+                Toast.makeText(applicationContext, "Welcome Back!", Toast.LENGTH_LONG).show()
                 startActivity((Intent(this, MainActivity::class.java)))
                 finish()
             }

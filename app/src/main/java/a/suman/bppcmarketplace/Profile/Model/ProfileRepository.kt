@@ -10,7 +10,7 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.apollographql.apollo.request.RequestHeaders
-import com.example.bppcmarketplace.GetProfileQuery
+import com.example.bppcmarketplace.MyProfileQuery
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
@@ -21,7 +21,7 @@ class ProfileRepository(application: Application) {
     private lateinit var token: String
     private lateinit var email: String
     private lateinit var disposable: Disposable
-    private val profileMutableLiveData = MutableLiveData<UserProfile>()
+    private val profileMutableLiveData = MutableLiveData<UserProfileDataClass>()
     val profileLiveData = liveData { emitSource(profileMutableLiveData) }
     private val appDatabase = BPPCDatabase.getBPPCDatabase(application)
 
@@ -36,8 +36,7 @@ class ProfileRepository(application: Application) {
                         email = it[0]!!.email.toString()
                     }
                     ApolloConnector.setUpApollo().query(
-                        GetProfileQuery.builder()
-                            .email(email)
+                        MyProfileQuery.builder()
                             .build()
                     )
                         .requestHeaders(
@@ -48,30 +47,30 @@ class ProfileRepository(application: Application) {
                                 )
                                 .build()
                         )
-                        .enqueue(object : ApolloCall.Callback<GetProfileQuery.Data>() {
+                        .enqueue(object : ApolloCall.Callback<MyProfileQuery.Data>() {
                             override fun onFailure(e: ApolloException) {
-                                Log.i("Fail", e.message)
+                                Log.i("Fail", e.message.toString())
                             }
 
-                            override fun onResponse(response: Response<GetProfileQuery.Data>) {
+                            override fun onResponse(response: Response<MyProfileQuery.Data>) {
                                 if (response.hasErrors()) {
                                     Log.i("Response has Errors", response.errors().toString())
-                                } else if (response.data()?.profile() != null) {
-                                    val profile = UserProfile(
-                                        Integer.parseInt(
-                                            response.data()!!.profile()!!.id()
-                                        ),
-                                        response.data()!!.profile()!!.name(),
-                                        response.data()!!.profile()!!.email(),
-                                        response.data()!!.profile()!!.hostel(),
-                                        response.data()!!.profile()!!.contactNo()
+                                } else if (response.data()?.myProfile() != null) {
+
+                                    val profile = UserProfileDataClass(
+                                        response.data()!!.myProfile()!!.name(),
+                                        response.data()!!.myProfile()!!.email(),
+                                        response.data()!!.myProfile()!!.hostel(),
+                                        response.data()!!.myProfile()!!.contactNo(),
+                                        response.data()!!.myProfile()!!.roomNo()
+
                                     )
                                     profileMutableLiveData.postValue(profile)
-
                                 }
                             }
                         })
-                })
+                }
+            )
     }
 
     fun fetchProfile() {
@@ -82,5 +81,12 @@ class ProfileRepository(application: Application) {
         disposable.dispose()
     }
 
-
+//    fun getProductList(list: List<MyProfileQuery.Product>): List<ProductDataClass> {
+//        val i = 0
+//        val productList = ArrayList<ProductDataClass>()
+//        while (i < list.size) {
+//            productList.add(ProductDataClass(list[i].name(), list[i].sold()))
+//        }
+//        return productList
+//    }
 }
