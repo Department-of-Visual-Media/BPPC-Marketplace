@@ -1,0 +1,170 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Category {
+    name: String!
+    products: [Product]
+}
+
+type CreateBid {
+    bid: ProductBid
+    errors: [String]!
+    ok: Boolean!
+    query: Query!
+}
+
+type CreateProduct {
+    errors: [String]!
+    ok: Boolean!
+    product: Product
+    query: Query!
+}
+
+type CreateProfile {
+    errors: [String]!
+    ok: Boolean!
+    profile: Profile
+    query: Query!
+}
+
+type Mutation {
+    createBid(id: Int!, input: ProductBidInput): CreateBid
+    createProduct(input: ProductInput): CreateProduct
+    createProfile(input: ProfileInput): CreateProfile
+    updateBid(id: Int!, input: ProductBidInput): UpdateBid
+    updateProduct(id: Int!, input: ProductInput): UpdateProduct
+    updateProfile(input: ProfileInput, username: String!): UpdateProfile
+    updateWishlist(id: Int!): UpdateWishlist
+}
+
+type Product {
+    basePrice: Int!
+    bids: [ProductBid]
+    category: Category
+    description: String!
+    id: ID!
+    images: [String]
+    name: String!
+    questions: [ProductQnA]
+    reports: [ProductReport]
+    seller: Profile
+    sold: Boolean!
+    visible: Boolean!
+}
+
+type ProductBid {
+    amount: Int!
+    bidder: Profile!
+    message: String!
+    product: Product!
+}
+
+type ProductPaginated {
+    hasNext: Boolean
+    hasPrev: Boolean
+    objects: [Product]
+    page: Int
+    pages: Int
+}
+
+type ProductQnA {
+    answer: String!
+    askedBy: Profile!
+    isAnswered: Boolean!
+    product: Product!
+    question: String!
+}
+
+type ProductReport {
+    message: String!
+    product: Product!
+    reportedBy: Profile!
+}
+
+type Profile {
+    avatar: String
+    bids: [ProductBid]
+    contactNo: Int
+    email: String!
+    hostel: String
+    id: ID!
+    name: String!
+    products: [Product]
+    rating: Float!
+    roomNo: Int
+    username: String
+}
+
+type Query {
+    allCategories: [Category]
+    allProducts: [Product]
+    allProfiles: [Profile]
+    category: [Category]
+    myProfile: Profile
+    product(id: Int): Product
+    productBid(id: Int): [ProductBid]
+    products(page: Int, pagesize: Int): ProductPaginated
+    profile(email: String, id: Int, username: String): Profile
+    wishlist: [Product]
+}
+
+type UpdateBid {
+    bid: ProductBid
+    errors: [String]!
+    ok: Boolean!
+    query: Query!
+}
+
+type UpdateProduct {
+    errors: [String]!
+    ok: Boolean!
+    product: Product
+    query: Query!
+}
+
+type UpdateProfile {
+    errors: [String]!
+    ok: Boolean!
+    profile: Profile
+    query: Query!
+}
+
+type UpdateWishlist {
+    errors: [String]!
+    ok: Boolean!
+    query: Query!
+    wishlist: Wishlist
+}
+
+type Wishlist {
+    id: ID!
+    products: [Product]
+    profile: Profile
+}
+
+input ProductBidInput {
+    amount: Int
+    id: ID
+    message: String
+}
+
+input ProductInput {
+    basePrice: Int
+    categoryId: Int
+    description: String
+    id: ID
+    name: String
+    sold: Boolean
+}
+
+input ProfileInput {
+    contactNo: Int
+    hostel: String
+    id: ID
+    name: String
+    roomNo: Int
+}

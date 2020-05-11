@@ -3,10 +3,15 @@ package a.suman.bppcmarketplace.Login.Model
 import a.suman.bppcmarketplace.BPPCDatabase
 import a.suman.bppcmarketplace.BasicUserData
 import a.suman.bppcmarketplace.Login.Model.Network.RetrofitClient
+import a.suman.bppcmarketplace.Profile.Model.ApolloConnector
+import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
 import a.suman.bppcmarketplace.R
 import android.app.Application
 import android.content.Intent
 import android.util.Log
+import com.apollographql.apollo.request.RequestHeaders
+import com.apollographql.apollo.rx2.Rx2Apollo
+import com.example.bppcmarketplace.MyProfileQuery
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,6 +21,7 @@ import com.google.android.gms.common.api.Scope
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
@@ -29,6 +35,8 @@ class LoginRepository(val application: Application) {
 
     private val authenticationService = bppcDatabase.getAuthenticationServices()
 
+    private val profileDao = bppcDatabase.getProfileDao()
+    private val compositeDisposable = CompositeDisposable()
 
 
     fun getGoogleSignInIntent(): Intent {
@@ -60,6 +68,8 @@ class LoginRepository(val application: Application) {
 //                   auth.signInAnonymously()
                         authenticationService.insertBasicUserData(it).doOnComplete {
                             Log.i("User Info", it.toString())
+                            saveUserProfile(it.token)
+
                         }
                     }
             } else {
@@ -76,11 +86,58 @@ class LoginRepository(val application: Application) {
     }
 
     fun logOut(): Completable {
-        return authenticationService
+        return Completable.mergeArray(
+            authenticationService
             .removeBasicUserData()
             .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread()), profileDao.removeUserProfile()
+                .subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
+        )
     }
 
 
+    private fun saveUserProfile(token: String) {
+        compositeDisposable.add(
+            Rx2Apollo.from(
+                ApolloConnector.setUpApollo().query(
+                    MyProfileQuery.builder()
+                        .build()
+                )
+                    .requestHeaders(
+                        RequestHeaders.builder()
+                            .addHeader(
+                                "Authorization",
+                                "JWT $token"
+                            )
+                            .build()
+                    )
+            ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                if (it.hasErrors()) {
+                    Log.i("Profile Response Error", it.errors().toString())
+                } else if (it.data()?.myProfile() != null) {
+
+                    profileDao.insertUserProfile(
+                        UserProfileDataClass(
+                            it.data()!!.myProfile()!!.email(),
+                            it.data()!!.myProfile()!!.name(),
+                            it.data()!!.myProfile()!!.hostel(),
+                            it.data()!!.myProfile()!!.contactNo(),
+                            it.data()!!.myProfile()!!.roomNo(),
+                            null
+                        )
+                    ).subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                            Log.i("Login Repository", "ProfileSaved")
+
+                        }
+                }
+            }, {
+                Log.i("Saving Into DB failed", it.message.toString())
+            })
+        )
+
+    }
+
 }
+
+

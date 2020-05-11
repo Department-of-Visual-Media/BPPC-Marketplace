@@ -7,7 +7,6 @@ import a.suman.bppcmarketplace.R
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_profile.*
-
 
 class ProfileFragment : Fragment() {
     private lateinit var profileViewModel: ProfileViewModel
@@ -32,7 +30,7 @@ class ProfileFragment : Fragment() {
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
         ).get(ProfileViewModel::class.java)
-        profileViewModel.fetchProfile()
+        profileViewModel.getCachedProfile()
 
         mainActivityViewModel = ViewModelProvider(
             this,
@@ -46,8 +44,6 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
-            Log.i("Name", it.name)
-
             nameTextView.text = it.name
             emailIcon.visibility = View.VISIBLE
             emailTextView.text = it.email
@@ -61,23 +57,15 @@ class ProfileFragment : Fragment() {
             showConfirmationDialog()
         }
 
+        wishlistButton.setOnClickListener {
+            Toast.makeText(context, "WishList", Toast.LENGTH_LONG).show()
+        }
 
         mainActivityViewModel.loginToken.observe(this, Observer {
             if (it == null) {
                 startActivity(Intent(activity, LoginView::class.java))
             }
         })
-
-        wishlistButton.setOnClickListener {
-            Toast.makeText(context, "WishList", Toast.LENGTH_LONG).show()
-        }
-
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        profileViewModel.dispose()
     }
 
     private fun showConfirmationDialog() {
