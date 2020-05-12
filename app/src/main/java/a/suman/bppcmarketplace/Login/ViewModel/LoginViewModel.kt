@@ -39,14 +39,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 compositeDisposable.add(repo.googleSignInComplete(data).subscribe({
                     statusLiveData.postValue("Success")
                    compositeDisposable.add(repo.observeForToken().subscribe({
-                       if (it.size>0){
+                       if (it.isNotEmpty()) {
                            loginTokenMutable.postValue(it[0])
-                           if (!it[0]!!.isNew) {
-                               statusLiveData.postValue("Old User")
-                           }
                        }
-
-
                    }, {}))
                 }, {
                     Log.d("ViewModel", "$it")
@@ -70,11 +65,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun logOut() {
-        compositeDisposable.add(repo.logOut().subscribe {
-            loginTokenMutable.postValue(null)
-        })
-    }
 
     override fun onCleared() {
         super.onCleared()

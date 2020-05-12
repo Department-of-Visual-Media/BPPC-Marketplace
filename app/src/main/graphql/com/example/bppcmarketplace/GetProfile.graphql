@@ -1,9 +1,0 @@
-query GetProfile($email:String){
-    profile(email: $email){
-        id
-        name
-        hostel
-        email
-        contactNo
-    }
-}
