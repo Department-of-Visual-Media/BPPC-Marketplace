@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class BasicUserData(
     @PrimaryKey
     var token: String,
-    var username: String?,
+    var name: String?,
     var email: String?,
     var isNew: Boolean
 )

@@ -14,7 +14,7 @@ class SplashViewModel (application:Application):AndroidViewModel(application){
     private val authenticationMLiveData= MutableLiveData <BasicUserData?>()
     val authenticationLiveData= liveData{ emitSource(authenticationMLiveData)
     }
-       val disposable = splashRepository.getAuthenitcation().subscribe({
+       val disposable = splashRepository.getAuthenitcation().subscribe({Log.d("Viewmodel", "subscribed")
             if (it.size == 1) {
                 authenticationMLiveData.postValue(it[0])
             } else {

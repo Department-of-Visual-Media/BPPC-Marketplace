@@ -1,4 +1,4 @@
-query getProductList($page:Int){
+query getProductList($page:Int!){
     products(page: $page) {
         page
         pages

@@ -4,6 +4,7 @@ import a.suman.bppcmarketplace.BPPCDatabase
 import a.suman.bppcmarketplace.BasicUserData
 import a.suman.bppcmarketplace.Login.Model.Network.RetrofitClient
 import a.suman.bppcmarketplace.R
+import a.suman.bppcmarketplace.TokenClass
 import android.app.Application
 import android.content.Intent
 import android.util.Log
@@ -50,10 +51,12 @@ class LoginRepository(val application: Application) {
             if (account != null) {
                 Log.d("REPO", "${account.displayName}")
                 val googleSignInToken = account.idToken.toString()
+                val name= account.displayName
+                val email=account.email
                  return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io()).flatMapCompletable {
 //                    val auth=FirebaseAuth.getInstance()
 //                   auth.signInAnonymously()
-                     authenticationService.insertBasicUserData(it).doOnComplete{}
+                     authenticationService.insertBasicUserData(it).doOnComplete{TokenClass.token=it.token}
                  }
             }else{
                 throw Exception()

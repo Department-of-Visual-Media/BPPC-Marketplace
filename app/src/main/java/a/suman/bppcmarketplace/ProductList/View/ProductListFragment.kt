@@ -1,6 +1,7 @@
 package a.suman.bppcmarketplace.ProductList.View
 
 import a.suman.bppcmarketplace.R
+import a.suman.bppcmarketplace.TokenClass
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.graphics.drawable.Drawable
@@ -15,7 +16,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import  android.os.Handler
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import kotlinx.coroutines.*
+import android.util.Log
 
 
 class ProductListFragment : Fragment() {
@@ -32,6 +35,7 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fillCustomGradient(view.findViewById(R.id.appbar_product_list))
+        Log.d("ProductList", TokenClass.token)
         animation=MainScope().launch {
             while(true){noInternetProduct.animate().alpha(0f).duration = 500
             delay(500)

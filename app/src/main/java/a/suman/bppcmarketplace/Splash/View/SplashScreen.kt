@@ -5,6 +5,7 @@ import a.suman.bppcmarketplace.MainActivity
 import a.suman.bppcmarketplace.NewUser.View.NewUser
 import a.suman.bppcmarketplace.R
 import a.suman.bppcmarketplace.Splash.ViewModel.SplashViewModel
+import a.suman.bppcmarketplace.TokenClass
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,6 +33,7 @@ class SplashScreen : AppCompatActivity() {
                 if (it != null) {
                     Log.d("Token", "${it.token}")
                     //splashViewModel.updateData()
+                    TokenClass.token=it.token
                     Handler().postDelayed({
                         if (it.isNew) {
                             startActivity(Intent(this, NewUser::class.java))
@@ -49,6 +51,7 @@ class SplashScreen : AppCompatActivity() {
                 }
             } else {
                 if (it != null) {
+                    TokenClass.token=it.token
                     //splashViewModel.updateData()
                     if (it.isNew) {
                         startActivity(Intent(this, NewUser::class.java))

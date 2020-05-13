@@ -51,9 +51,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         statusLiveData.postValue("Internet")
                         }
                     }else if(it is HttpException){
-                    statusLiveData.postValue("Server Error")
+                        if(it.code()==500){
+                            statusLiveData.postValue("Server Error")
+                        }
+                        statusLiveData.postValue("Error")
                     }else{
-                        statusLiveData.postValue("Server Error")
+                        statusLiveData.postValue("Error")
                     }
                 }))
             }

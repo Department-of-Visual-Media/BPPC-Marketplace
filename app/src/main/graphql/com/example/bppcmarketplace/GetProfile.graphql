@@ -1,4 +1,4 @@
-query GetProfile($id:Int){
+query GetProfile($id:Int!){
     profile(id:$id){
         id
         name
