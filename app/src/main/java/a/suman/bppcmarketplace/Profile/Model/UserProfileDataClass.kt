@@ -1,9 +1,9 @@
 package a.suman.bppcmarketplace.Profile.Model
 
-import a.suman.bppcmarketplace.ProductList.Model.Network.ProductDataClass
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.example.bppcmarketplace.ProfileWithProductsQuery
 
 @Entity
 data class UserProfileDataClass(
@@ -14,7 +14,7 @@ data class UserProfileDataClass(
     var contactNo: Int?,
     var roomNo: Int?,
     @Ignore
-    var productList: List<ProductDataClass>?
+    var productList: List<ProfileWithProductsQuery.Product>?
 
 ) {
     constructor(email: String, name: String, hostel: String?, contactNo: Int?, roomNo: Int?)

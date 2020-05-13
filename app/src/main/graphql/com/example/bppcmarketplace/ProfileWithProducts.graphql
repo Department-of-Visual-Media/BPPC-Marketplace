@@ -7,6 +7,9 @@ query ProfileWithProducts{
         contactNo
         products{
             name
+            basePrice
+            description
+            images
             sold
         }
     }

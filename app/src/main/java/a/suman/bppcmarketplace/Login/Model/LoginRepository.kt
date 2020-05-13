@@ -66,7 +66,9 @@ class LoginRepository(val application: Application) {
                     .flatMapCompletable {
 //                    val auth=FirebaseAuth.getInstance()
 //                   auth.signInAnonymously()
-                        authenticationService.insertBasicUserData(it).doOnComplete {
+                        authenticationService.insertBasicUserData(it)
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread()).doOnComplete {
                             Log.i("User Info", it.toString())
                             saveUserProfile(it.token)
 
@@ -123,7 +125,7 @@ class LoginRepository(val application: Application) {
                             it.data()!!.myProfile()!!.hostel(),
                             it.data()!!.myProfile()!!.contactNo(),
                             it.data()!!.myProfile()!!.roomNo(),
-                            null
+                            emptyList()
                         )
                     ).subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
