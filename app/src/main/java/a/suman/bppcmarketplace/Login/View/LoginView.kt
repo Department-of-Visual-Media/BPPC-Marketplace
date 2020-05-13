@@ -11,19 +11,15 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.view.View
 import android.util.Log
+import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Interpolator
-import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.login_layout.*
 import kotlin.math.sin
-import android.os.Handler
-import io.reactivex.Observable
 
 class LoginView : AppCompatActivity(), SensorEventListener {
     private val RC_SIGN_IN = 1
@@ -90,6 +86,9 @@ class LoginView : AppCompatActivity(), SensorEventListener {
         }
 
         loginViewModel.loginStatus.observe(this, Observer{
+            if (it == "Old User") {
+                Toast.makeText(applicationContext, "Welcome Back!", Toast.LENGTH_LONG).show()
+            }
             if(it=="Error"){
                 girl.visibility= View.VISIBLE
                 loader.visibility=View.GONE
@@ -139,10 +138,12 @@ class LoginView : AppCompatActivity(), SensorEventListener {
                 startActivity(Intent(this, NewUser::class.java))
                 finish()
             }else{
+                Toast.makeText(applicationContext, "Welcome Back!", Toast.LENGTH_LONG).show()
                 startActivity((Intent(this, MainActivity::class.java)))
                 finish()
             }
             }
+
         })
 
 

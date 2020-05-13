@@ -1,0 +1,13 @@
+query ProfileWithProducts{
+    myProfile{
+        name
+        hostel
+        email
+        roomNo
+        contactNo
+        products{
+            name
+            sold
+        }
+    }
+}

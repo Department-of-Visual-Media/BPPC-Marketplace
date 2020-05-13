@@ -1,0 +1,11 @@
+query GetWishList{
+    wishlist{
+        name
+        basePrice
+        description
+        images
+        seller{
+            name
+        }
+    }
+}

@@ -19,7 +19,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private var repo: LoginRepository =
         LoginRepository(application)
 
-    val compositeDisposable=CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     private val statusLiveData: MutableLiveData<String> = MutableLiveData()
     val loginStatus= liveData {emitSource(statusLiveData) }
@@ -39,8 +39,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 compositeDisposable.add(repo.googleSignInComplete(data).subscribe({
                     statusLiveData.postValue("Success")
                    compositeDisposable.add(repo.observeForToken().subscribe({
-                       if (it.size>0){
-                       loginTokenMutable.postValue(it[0])}},{ }))
+                       if (it.isNotEmpty()) {
+                           loginTokenMutable.postValue(it[0])
+                       }
+                   }, {}))
                 }, {
                     Log.d("ViewModel", "$it")
                     if(it is ApiException){
@@ -67,10 +69,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
     }
+
 
 }

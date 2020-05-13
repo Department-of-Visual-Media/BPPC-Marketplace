@@ -4,20 +4,20 @@
     app:cnb_unselectedColor="#B6A4A4">
 
     <item
-        android:id="@+id/products"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Products"
-        app:cnb_iconColor="@color/colorPrimaryDark"/>
+        android:id="@+id/upload"
+        android:icon="@drawable/ic_add_a_photo_black_24dp"
+        android:title="Upload"
+        app:cnb_iconColor="#AA9110" />
     <item
         android:id="@+id/users"
         android:icon="@drawable/ic_group_black_24dp"
         android:title="Users"
         app:cnb_iconColor="#E91E63"/>
     <item
-        android:id="@+id/upload"
-        android:icon="@drawable/ic_add_a_photo_black_24dp"
-        android:title="Upload"
-        app:cnb_iconColor="#AA9110"/>
+        android:id="@+id/products"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Products"
+        app:cnb_iconColor="@color/colorPrimaryDark" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_person_outline_black_24dp"

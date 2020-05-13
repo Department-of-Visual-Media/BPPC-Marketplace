@@ -1,10 +1,11 @@
-query GetProfile($id:Int!){
-    profile(id:$id){
-        id
+query MyProfile{
+    myProfile{
         name
         hostel
         email
+        roomNo
         contactNo
+
 
     }
 }
