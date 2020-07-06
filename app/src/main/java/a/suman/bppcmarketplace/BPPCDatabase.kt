@@ -1,6 +1,7 @@
 package a.suman.bppcmarketplace
 
 
+import a.suman.bppcmarketplace.Profile.Model.ProfileDao
 import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
 import android.app.Application
 import androidx.room.Database

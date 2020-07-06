@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
@@ -42,6 +43,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val productAdapter = ProductAdapter()
+        postsRecylerView.layoutManager = LinearLayoutManager(context)
+        postsRecylerView.adapter = productAdapter
 
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
             nameTextView.text = it.name
@@ -51,6 +55,19 @@ class ProfileFragment : Fragment() {
             phoneIcon.visibility = View.VISIBLE
             contactNoTextView.text = it.contactNo.toString()
             roomNoTextView.text = it.roomNo.toString()
+            if (it.productList != null) {
+                productAdapter.setDataList(it.productList!!)
+                if (it.productList!!.isEmpty())
+                    productTextView.visibility = View.VISIBLE
+            }
+        })
+
+        profileViewModel.isLoadingLiveData.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                profileProgressBar.visibility = View.VISIBLE
+                productTextView.visibility = View.GONE
+            } else
+                profileProgressBar.visibility = View.GONE
         })
 
         logOutButton.setOnClickListener {

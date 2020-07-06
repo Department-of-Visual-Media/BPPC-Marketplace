@@ -6,7 +6,6 @@ import a.suman.bppcmarketplace.Login.Model.Network.RetrofitClient
 import a.suman.bppcmarketplace.Profile.Model.ApolloConnector
 import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
 import a.suman.bppcmarketplace.R
-import a.suman.bppcmarketplace.TokenClass
 import android.app.Application
 import android.content.Intent
 import android.util.Log
@@ -46,7 +45,8 @@ class LoginRepository(val application: Application) {
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(application.getString(R.string.OAuth2_client_id))
                 .requestEmail().requestProfile().requestScopes(
-                    Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
+                    Scope(Scopes.EMAIL), Scope(Scopes.PROFILE)
+                )
                 .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(application.applicationContext, gso)
@@ -62,15 +62,13 @@ class LoginRepository(val application: Application) {
             if (account != null) {
                 Log.d("REPO", "${account.displayName}")
                 val googleSignInToken = account.idToken.toString()
-                val name= account.displayName
-                val email=account.email
-                 return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io()).flatMapCompletable {
+                return apiInstance.authWithBackend(googleSignInToken).subscribeOn(Schedulers.io())
+                    .flatMapCompletable {
 //                    val auth=FirebaseAuth.getInstance()
 //                   auth.signInAnonymously()
-                     authenticationService.insertBasicUserData(it).doOnComplete{TokenClass.token=it.token}
-                 }
-            }else{
-                        authenticationService.insertBasicUserData(it).doOnComplete {
+                        authenticationService.insertBasicUserData(it)
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread()).doOnComplete {
                             Log.i("User Info", it.toString())
                             saveUserProfile(it.token)
 
@@ -127,7 +125,7 @@ class LoginRepository(val application: Application) {
                             it.data()!!.myProfile()!!.hostel(),
                             it.data()!!.myProfile()!!.contactNo(),
                             it.data()!!.myProfile()!!.roomNo(),
-                            null
+                            emptyList()
                         )
                     ).subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {

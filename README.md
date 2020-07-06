@@ -9,3 +9,4 @@ Project BPPC MarketPlace (codename Kryo) is an online portal for the BITS Pilani
 5. **Product Screen** - Displays all the product details.
 6. **Cart** - Fetches Products stored in the cart.
 7. **Upload** - Upload new product for bidding.
+## ~~This project has currently been put to halt to complete few upcoming fest related projects.~~

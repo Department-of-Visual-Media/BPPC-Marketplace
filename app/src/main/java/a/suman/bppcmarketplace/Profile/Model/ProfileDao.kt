@@ -1,8 +1,8 @@
-package a.suman.bppcmarketplace
+package a.suman.bppcmarketplace.Profile.Model
 
-import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -15,6 +15,6 @@ interface ProfileDao {
     @Query("DELETE FROM UserProfileDataClass")
     fun removeUserProfile(): Completable
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUserProfile(u: UserProfileDataClass): Completable
 }
