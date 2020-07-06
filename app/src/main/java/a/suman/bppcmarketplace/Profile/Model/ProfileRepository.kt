@@ -1,10 +1,10 @@
 package a.suman.bppcmarketplace.Profile.Model
 
 
+import a.suman.bppcmarketplace.ApolloConnector
 import a.suman.bppcmarketplace.BPPCDatabase
 import android.app.Application
 import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.request.RequestHeaders
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.example.bppcmarketplace.ProfileWithProductsQuery
 import io.reactivex.Observable
@@ -33,17 +33,8 @@ class ProfileRepository(application: Application) {
     private fun getApolloClient(token: String): Observable<Response<ProfileWithProductsQuery.Data>> {
         return Rx2Apollo.from(
             ApolloConnector.setUpApollo().query(
-                ProfileWithProductsQuery.builder()
-                    .build()
+                ProfileWithProductsQuery()
             )
-                .requestHeaders(
-                    RequestHeaders.builder()
-                        .addHeader(
-                            "Authorization",
-                            "JWT $token"
-                        )
-                        .build()
-                )
         )
     }
 }

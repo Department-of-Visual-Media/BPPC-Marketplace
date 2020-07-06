@@ -86,47 +86,41 @@ class LoginView : AppCompatActivity(), SensorEventListener {
         }
 
         loginViewModel.loginStatus.observe(this, Observer{
-            if (it == "Old User") {
-                Toast.makeText(applicationContext, "Welcome Back!", Toast.LENGTH_LONG).show()
-            }
-            if(it=="Error"){
-                girl.visibility= View.VISIBLE
-                loader.visibility=View.GONE
-                progressBar.visibility=View.GONE
-                sign_in_button.cardElevation=5f
-                sign_in_button.isEnabled=true
+
+            if (it == "Error") {
+                girl.visibility = View.VISIBLE
+                loader.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                sign_in_button.cardElevation = 5f
+                sign_in_button.isEnabled = true
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
-            }
-            if(it=="Internet"){
-                girl.visibility= View.VISIBLE
-                loader.visibility=View.GONE
-                progressBar.visibility=View.GONE
-                sign_in_button.cardElevation=5f
-                sign_in_button.isEnabled=true
+            } else if (it == "Internet") {
+                girl.visibility = View.VISIBLE
+                loader.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                sign_in_button.cardElevation = 5f
+                sign_in_button.isEnabled = true
                 Toast.makeText(this, "Check your Internet Connection", Toast.LENGTH_LONG).show()
-            }
-            if(it=="GoogleSignInError"){
-                girl.visibility= View.VISIBLE
-                loader.visibility=View.GONE
-                progressBar.visibility=View.GONE
-                sign_in_button.cardElevation=5f
-                sign_in_button.isEnabled=true
+            } else if (it == "GoogleSignInError") {
+                girl.visibility = View.VISIBLE
+                loader.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                sign_in_button.cardElevation = 5f
+                sign_in_button.isEnabled = true
                 Toast.makeText(this, "Google Sign In Failed", Toast.LENGTH_LONG).show()
-            }
-            if(it=="Server Error"){
-                girl.visibility= View.VISIBLE
-                loader.visibility=View.GONE
-                progressBar.visibility=View.GONE
-                sign_in_button.cardElevation=5f
-                sign_in_button.isEnabled=true
+            } else if (it == "Server Error") {
+                girl.visibility = View.VISIBLE
+                loader.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                sign_in_button.cardElevation = 5f
+                sign_in_button.isEnabled = true
                 Toast.makeText(this, "Server is under maintenance", Toast.LENGTH_LONG).show()
-            }
-            if(it=="BitsMail"){
-                girl.visibility= View.VISIBLE
-                loader.visibility=View.GONE
-                progressBar.visibility=View.GONE
-                sign_in_button.cardElevation=5f
-                sign_in_button.isEnabled=true
+            } else if (it == "BitsMail") {
+                girl.visibility = View.VISIBLE
+                loader.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                sign_in_button.cardElevation = 5f
+                sign_in_button.isEnabled = true
                 Toast.makeText(this, "Login using Bits Mail", Toast.LENGTH_LONG).show()
             }
         })

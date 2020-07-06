@@ -1,9 +1,7 @@
 package a.suman.bppcmarketplace.Profile.Model
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.bppcmarketplace.ProfileWithProductsQuery
 
 @Entity
 data class UserProfileDataClass(
@@ -12,12 +10,15 @@ data class UserProfileDataClass(
     var name: String,
     var hostel: String?,
     var contactNo: Int?,
-    var roomNo: Int?,
-    @Ignore
-    var productList: List<ProfileWithProductsQuery.Product>?
+    var roomNo: Int?
+)
 
-) {
-    constructor(email: String, name: String, hostel: String?, contactNo: Int?, roomNo: Int?)
-            : this(email, name, hostel, contactNo, roomNo, null)
-}
+@Entity
+data class UserProductClass(
+    var name: String,
+    var basePrice: Int,
+    var description: String?,
+    var sold: String
+)
+
 

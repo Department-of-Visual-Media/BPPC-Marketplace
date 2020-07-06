@@ -12,26 +12,30 @@ class ApolloConnector {
         private var INSTANCE: ApolloClient? = null
 
 
-        @Synchronized
         fun setUpApollo(): ApolloClient {
             val instance = INSTANCE
             if (instance == null) {
-                val interceptor = HttpLoggingInterceptor()
-                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                val okHttpClient = OkHttpClient.Builder().addInterceptor{
-                    val original=it.request()
-                    val builder= original.newBuilder().method(original.method, original.body)
-                    builder.header("Authorization", "JWT ${TokenClass.token}")
-                    it.proceed(builder.build())
-                }.build()
-                val temp =
-                    ApolloClient.builder().serverUrl(BASE_URL).okHttpClient(okHttpClient)
-                        .build()
-                INSTANCE = temp
-                return temp
+                synchronized(this) {
+                    if (instance == null) {
+                        val interceptor = HttpLoggingInterceptor()
+                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                        val okHttpClient = OkHttpClient.Builder().addInterceptor {
+                            val original = it.request()
+                            val builder =
+                                original.newBuilder().method(original.method, original.body)
+                            builder.header("Authorization", "JWT ${TokenClass.token}")
+                            it.proceed(builder.build())
+                        }.build()
+                        val temp =
+                            ApolloClient.builder().serverUrl(BASE_URL).okHttpClient(okHttpClient)
+                                .build()
+                        INSTANCE = temp
+                        return temp
+                    }
+                }
             }
-            return instance
-            }
+            return instance!!
+        }
 
         @Synchronized
         fun invalidateApollo(){

@@ -55,11 +55,11 @@ class ProfileFragment : Fragment() {
             phoneIcon.visibility = View.VISIBLE
             contactNoTextView.text = it.contactNo.toString()
             roomNoTextView.text = it.roomNo.toString()
-            if (it.productList != null) {
-                productAdapter.setDataList(it.productList!!)
-                if (it.productList!!.isEmpty())
-                    productTextView.visibility = View.VISIBLE
-            }
+
+        })
+
+        profileViewModel.productLiveData.observe(viewLifecycleOwner, Observer {
+            //TODO:Consume Product list data in Recycler View
         })
 
         profileViewModel.isLoadingLiveData.observe(viewLifecycleOwner, Observer {

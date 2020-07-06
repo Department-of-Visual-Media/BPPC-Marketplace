@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bppcmarketplace.ProfileWithProductsQuery
 import kotlinx.android.synthetic.main.row_profile_recyler_view.view.*
 
-class ProductAdapter() : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     private var list: List<ProfileWithProductsQuery.Product> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,8 +33,8 @@ class ProductAdapter() : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(product: ProfileWithProductsQuery.Product) {
-            itemView.productNameTextView.text = product.name()
-            itemView.productStatusTextView.text = product.sold().toString()
+            itemView.productNameTextView.text = product.name
+            itemView.productStatusTextView.text = product.sold.toString()
         }
     }
 }

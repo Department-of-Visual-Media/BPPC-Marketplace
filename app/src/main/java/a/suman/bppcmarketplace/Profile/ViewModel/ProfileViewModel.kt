@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import com.example.bppcmarketplace.ProfileWithProductsQuery
 import io.reactivex.disposables.CompositeDisposable
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
@@ -14,8 +15,10 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private val compositeDisposable = CompositeDisposable()
     private val profileMutableLiveData = MutableLiveData<UserProfileDataClass>()
     private val isLoadingMutableLiveData = MutableLiveData<Boolean>()
+    private val productMutableLiveData = MutableLiveData<List<ProfileWithProductsQuery.Product?>?>()
     val profileLiveData = liveData { emitSource(profileMutableLiveData) }
     val isLoadingLiveData = liveData { emitSource(isLoadingMutableLiveData) }
+    val productLiveData = liveData { emitSource(productMutableLiveData) }
 
     fun getCachedProfile() {
         compositeDisposable.add(profileRepository.getCachedProfile().subscribe({
@@ -31,17 +34,17 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         compositeDisposable.add(profileRepository.getProfileObservable().subscribe {
             if (it.hasErrors()) {
                 Log.i("Profile Response Error", it.errors().toString())
-            } else if (it.data()?.myProfile() != null) {
+            } else if (it.data()?.myProfile != null) {
                 profileMutableLiveData.postValue(
                     UserProfileDataClass(
-                        it.data()!!.myProfile()!!.email(),
-                        it.data()!!.myProfile()!!.name(),
-                        it.data()!!.myProfile()!!.hostel(),
-                        it.data()!!.myProfile()!!.contactNo(),
-                        it.data()!!.myProfile()!!.roomNo(),
-                        it.data()!!.myProfile()!!.products()
+                        it.data()!!.myProfile!!.email,
+                        it.data()!!.myProfile!!.name,
+                        it.data()!!.myProfile!!.hostel,
+                        it.data()!!.myProfile!!.contactNo,
+                        it.data()!!.myProfile!!.roomNo
                     )
                 )
+                productMutableLiveData.postValue(it.data()!!.myProfile!!.products)
                 isLoadingMutableLiveData.postValue(false)
             }
         })

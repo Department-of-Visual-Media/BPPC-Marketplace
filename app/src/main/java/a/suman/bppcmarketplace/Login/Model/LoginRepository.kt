@@ -1,15 +1,14 @@
 package a.suman.bppcmarketplace.Login.Model
 
+import a.suman.bppcmarketplace.ApolloConnector
 import a.suman.bppcmarketplace.BPPCDatabase
 import a.suman.bppcmarketplace.BasicUserData
 import a.suman.bppcmarketplace.Login.Model.Network.RetrofitClient
-import a.suman.bppcmarketplace.Profile.Model.ApolloConnector
 import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
 import a.suman.bppcmarketplace.R
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import com.apollographql.apollo.request.RequestHeaders
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.example.bppcmarketplace.MyProfileQuery
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -102,30 +101,20 @@ class LoginRepository(val application: Application) {
         compositeDisposable.add(
             Rx2Apollo.from(
                 ApolloConnector.setUpApollo().query(
-                    MyProfileQuery.builder()
-                        .build()
+                    MyProfileQuery()
                 )
-                    .requestHeaders(
-                        RequestHeaders.builder()
-                            .addHeader(
-                                "Authorization",
-                                "JWT $token"
-                            )
-                            .build()
-                    )
             ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 if (it.hasErrors()) {
                     Log.i("Profile Response Error", it.errors().toString())
-                } else if (it.data()?.myProfile() != null) {
+                } else if (it.data()?.myProfile != null) {
 
                     profileDao.insertUserProfile(
                         UserProfileDataClass(
-                            it.data()!!.myProfile()!!.email(),
-                            it.data()!!.myProfile()!!.name(),
-                            it.data()!!.myProfile()!!.hostel(),
-                            it.data()!!.myProfile()!!.contactNo(),
-                            it.data()!!.myProfile()!!.roomNo(),
-                            emptyList()
+                            it.data()!!.myProfile!!.email,
+                            it.data()!!.myProfile!!.name,
+                            it.data()!!.myProfile!!.hostel,
+                            it.data()!!.myProfile!!.contactNo,
+                            it.data()!!.myProfile!!.roomNo
                         )
                     ).subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
