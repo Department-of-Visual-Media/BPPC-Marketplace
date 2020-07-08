@@ -39,7 +39,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 compositeDisposable.add(repo.googleSignInComplete(data).subscribe({
                     statusLiveData.postValue("Success")
                    compositeDisposable.add(repo.observeForToken().subscribe({
-                       if (it.isNotEmpty()) {
+                       if (it!!.isNotEmpty()) {
                            loginTokenMutable.postValue(it[0])
                        }
                    }, {}))

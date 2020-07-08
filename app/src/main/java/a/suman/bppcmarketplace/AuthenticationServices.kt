@@ -12,7 +12,7 @@ import io.reactivex.Single
 @Dao
 interface AuthenticationServices{
     @Query("SELECT * FROM BasicUserData")
-    fun getBasicUserData(): Single<List<BasicUserData?>>
+    fun getBasicUserData(): Single<List<BasicUserData?>?>
 
     @Query("DELETE FROM BasicUserData")
     fun removeBasicUserData():Completable

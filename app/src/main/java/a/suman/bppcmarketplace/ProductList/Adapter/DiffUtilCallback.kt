@@ -8,13 +8,13 @@ class DiffUtilCallback : DiffUtil.ItemCallback<GetProductListQuery.Object>() {
         oldItem: GetProductListQuery.Object,
         newItem: GetProductListQuery.Object
     ): Boolean {
-        return false
+        return oldItem == newItem
     }
 
     override fun areItemsTheSame(
         oldItem: GetProductListQuery.Object,
         newItem: GetProductListQuery.Object
     ): Boolean {
-        return false
+        return oldItem.id == newItem.id
     }
 }

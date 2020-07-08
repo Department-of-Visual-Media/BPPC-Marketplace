@@ -29,7 +29,7 @@ class WishListRepo(application: Application) {
             .subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 Consumer {
-                    if (it.size == 1) {
+                    if (it?.size == 1) {
                         token = it[0]!!.token
                     }
                     ApolloConnector.setUpApollo().query(GetWishListQuery())

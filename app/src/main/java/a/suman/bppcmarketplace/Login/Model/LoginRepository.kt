@@ -82,7 +82,7 @@ class LoginRepository(val application: Application) {
         }
     }
 
-    fun observeForToken(): Single<List<BasicUserData?>> {
+    fun observeForToken(): Single<List<BasicUserData?>?> {
         return authenticationService.getBasicUserData().subscribeOn(Schedulers.io())
     }
 

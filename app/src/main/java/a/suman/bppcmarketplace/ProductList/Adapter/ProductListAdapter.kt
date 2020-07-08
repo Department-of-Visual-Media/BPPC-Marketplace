@@ -9,11 +9,11 @@ import com.example.bppcmarketplace.GetProductListQuery
 class ProductListAdapter :
     PagedListAdapter<GetProductListQuery.Object, ProductViewHolder>(DiffUtilCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        TODO("Not yet implemented")
+        TODO()
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
     }
 
 

@@ -7,12 +7,12 @@ import a.suman.bppcmarketplace.R
 import a.suman.bppcmarketplace.Splash.ViewModel.SplashViewModel
 import a.suman.bppcmarketplace.TokenClass
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Handler
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 
 class SplashScreen : AppCompatActivity() {
 
@@ -28,6 +28,7 @@ class SplashScreen : AppCompatActivity() {
             )
 
         splashViewModel.authenticationLiveData.observe(this, Observer {
+            Log.d("Ayush", "Splash")
             val ftime = System.currentTimeMillis()
             if ((ftime - itime) < 2000) {
                 if (it != null) {

@@ -68,7 +68,9 @@
         android:orientation="vertical">
         <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            android:id="@+id/prodrecyclerview"
+            android:layout_height="match_parent"/>
+
         <ImageView
             android:id="@+id/noInternetProduct"
             android:layout_width="match_parent"
