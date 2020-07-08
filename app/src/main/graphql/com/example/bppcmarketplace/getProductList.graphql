@@ -5,6 +5,9 @@ query getProductList($page:Int!){
         hasNext
         hasPrev
         objects{
+            id
+            images
+            sold
             name
             basePrice
             category{
