@@ -6,11 +6,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 class ApolloConnector {
     companion object {
-        private const val BASE_URL = "https://market.bits-dvm.org/api/graphql/"
+        private const val BASE_URL = "https://market.hedonhermdev.tech/api/graphql/"
 
         @Volatile
         private var INSTANCE: ApolloClient? = null
 
+        fun deleteApollo() {
+            INSTANCE = null
+        }
 
         fun setUpApollo(): ApolloClient {
             val instance = INSTANCE

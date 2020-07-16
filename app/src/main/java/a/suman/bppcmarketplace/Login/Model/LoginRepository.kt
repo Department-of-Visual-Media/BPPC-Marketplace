@@ -1,11 +1,8 @@
 package a.suman.bppcmarketplace.Login.Model
 
-import a.suman.bppcmarketplace.ApolloConnector
-import a.suman.bppcmarketplace.BPPCDatabase
-import a.suman.bppcmarketplace.BasicUserData
+import a.suman.bppcmarketplace.*
 import a.suman.bppcmarketplace.Login.Model.Network.RetrofitClient
 import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
-import a.suman.bppcmarketplace.R
 import android.app.Application
 import android.content.Intent
 import android.util.Log
@@ -68,8 +65,9 @@ class LoginRepository(val application: Application) {
                         authenticationService.insertBasicUserData(it)
                             .subscribeOn(Schedulers.computation())
                             .observeOn(AndroidSchedulers.mainThread()).doOnComplete {
-                            Log.i("User Info", it.toString())
-                            saveUserProfile(it.token)
+                                TokenClass.token = it.token
+                                Log.i("User Info", it.toString())
+                                saveUserProfile()
 
                         }
                     }
@@ -97,7 +95,7 @@ class LoginRepository(val application: Application) {
     }
 
 
-    private fun saveUserProfile(token: String) {
+    private fun saveUserProfile() {
         compositeDisposable.add(
             Rx2Apollo.from(
                 ApolloConnector.setUpApollo().query(
