@@ -3,9 +3,6 @@ query MyProfile{
         name
         hostel
         email
-        roomNo
         contactNo
-
-
     }
 }

@@ -40,8 +40,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                         it.data()!!.myProfile!!.email,
                         it.data()!!.myProfile!!.name,
                         it.data()!!.myProfile!!.hostel,
-                        it.data()!!.myProfile!!.contactNo,
-                        it.data()!!.myProfile!!.roomNo
+                        it.data()!!.myProfile!!.contactNo
                     )
                 )
                 productMutableLiveData.postValue(it.data()!!.myProfile!!.products)

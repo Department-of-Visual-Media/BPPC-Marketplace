@@ -5,21 +5,14 @@ schema {
     mutation: Mutation
 }
 
-type AddToWishlist {
-    errors: [String]!
-    ok: Boolean!
-    query: Query!
-    wishlist: Wishlist
-}
-
 type Category {
     name: String!
     products: [Product]
 }
 
-type CreateBid {
-    bid: ProductBid
+type CreateOffer {
     errors: [String]!
+    offer: ProductOffer
     ok: Boolean!
     query: Query!
 }
@@ -31,42 +24,42 @@ type CreateProduct {
     query: Query!
 }
 
-type CreateProfile {
+type CreateUserReport {
     errors: [String]!
     ok: Boolean!
-    profile: Profile
     query: Query!
+    userReport: UserReport
 }
 
 type Mutation {
-    createBid(id: Int!, input: ProductBidInput): CreateBid
+    createOffer(input: ProductOfferInput, productId: Int!): CreateOffer
     createProduct(input: ProductInput): CreateProduct
-    createProfile(input: ProfileInput): CreateProfile
-    updateBid(id: Int!, input: ProductBidInput): UpdateBid
+    createUserReport(input: UserReportInput): CreateUserReport
     updateProduct(id: Int!, input: ProductInput): UpdateProduct
-    updateProfile(input: ProfileInput, username: String!): UpdateProfile
-    updateWishlist(id: Int!): AddToWishlist
+    updateProfile(input: ProfileUpdateInput, username: String!): UpdateProfile
+    updateWishlist(id: Int!): UpdateWishlist
 }
 
 type Product {
-    basePrice: Int!
-    bids: [ProductBid]
     category: Category
+    createdAt: DateTime!
     description: String!
+    expectedPrice: Int!
     id: ID!
     images: [String]
+    isNegotiable: Boolean!
     name: String!
+    offers: [ProductOffer]
     questions: [ProductQnA]
-    reports: [ProductReport]
     seller: Profile
     sold: Boolean!
     visible: Boolean!
 }
 
-type ProductBid {
+type ProductOffer {
     amount: Int!
-    bidder: Profile!
     message: String!
+    offerer: Profile!
     product: Product!
 }
 
@@ -86,43 +79,30 @@ type ProductQnA {
     question: String!
 }
 
-type ProductReport {
-    message: String!
-    product: Product!
-    reportedBy: Profile!
-}
-
 type Profile {
-    bids: [ProductBid]
-    contactNo: Int
+    avatar: String
+    contactNo: String
     email: String!
     hostel: String
     id: ID!
     name: String!
+    offers: [ProductOffer]
     products: [Product]
-    profilePicture: String
     rating: Float!
-    roomNo: Int
+    reports: [UserReport]
     username: String
 }
 
 type Query {
     allCategories: [Category]
-    allProducts: [Product]
     allProfiles: [Profile]
-    category: [Category]
+    category(name: String): Category
+    myProfile: Profile
     product(id: Int): Product
-    productBid(id: Int): [ProductBid]
-    products(page: Int): ProductPaginated
+    productOffer(id: Int): [ProductOffer]
+    products(page: Int, pagesize: Int): ProductPaginated
     profile(email: String, id: Int, username: String): Profile
     wishlist: [Product]
-}
-
-type UpdateBid {
-    bid: ProductBid
-    errors: [String]!
-    ok: Boolean!
-    query: Query!
 }
 
 type UpdateProduct {
@@ -139,31 +119,65 @@ type UpdateProfile {
     query: Query!
 }
 
+type UpdateWishlist {
+    errors: [String]!
+    ok: Boolean!
+    query: Query!
+    wishlist: Wishlist
+}
+
+type UserReport {
+    category: UserReportCategory!
+    reportedBy: Profile!
+    reportedUser: Profile!
+}
+
 type Wishlist {
     id: ID!
     products: [Product]
     profile: Profile
 }
 
-input ProductBidInput {
+"An enumeration."
+enum UserReportCategory {
+    "Spam"
+    A_1
+    "Profanity"
+    A_2
+    "Refusal to Pay"
+    A_3
+}
+
+input ProductInput {
+    categoryId: Int
+    description: String
+    expectedPrice: Int
+    id: ID
+    isNegotiable: Boolean
+    name: String
+}
+
+input ProductOfferInput {
     amount: Int
     id: ID
     message: String
 }
 
-input ProductInput {
-    basePrice: Int
-    categoryId: Int
-    description: String
-    id: ID
+input ProfileUpdateInput {
+    contactNo: String
+    hostel: String
     name: String
-    sold: Boolean
 }
 
-input ProfileInput {
-    contactNo: Int
-    hostel: String
-    id: ID
-    name: String
-    roomNo: Int
+input UserReportInput {
+    category: Int
+    reportedUser: String
 }
+
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime

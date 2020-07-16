@@ -9,8 +9,7 @@ data class UserProfileDataClass(
     var email: String,
     var name: String,
     var hostel: String?,
-    var contactNo: Int?,
-    var roomNo: Int?
+    var contactNo: String?
 )
 
 @Entity

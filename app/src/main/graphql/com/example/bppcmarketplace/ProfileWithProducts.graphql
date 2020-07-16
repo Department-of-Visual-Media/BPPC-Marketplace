@@ -3,11 +3,10 @@ query ProfileWithProducts{
         name
         hostel
         email
-        roomNo
         contactNo
         products{
             name
-            basePrice
+            expectedPrice
             description
             images
             sold

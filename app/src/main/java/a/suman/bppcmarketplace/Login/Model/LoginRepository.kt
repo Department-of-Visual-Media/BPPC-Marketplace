@@ -111,8 +111,7 @@ class LoginRepository(val application: Application) {
                             it.data()!!.myProfile!!.email,
                             it.data()!!.myProfile!!.name,
                             it.data()!!.myProfile!!.hostel,
-                            it.data()!!.myProfile!!.contactNo,
-                            it.data()!!.myProfile!!.roomNo
+                            it.data()!!.myProfile!!.contactNo
                         )
                     ).subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {

@@ -54,8 +54,6 @@ class ProfileFragment : Fragment() {
             hostelTextView.text = it.hostel
             phoneIcon.visibility = View.VISIBLE
             contactNoTextView.text = it.contactNo.toString()
-            roomNoTextView.text = it.roomNo.toString()
-
         })
 
         profileViewModel.productLiveData.observe(viewLifecycleOwner, Observer {

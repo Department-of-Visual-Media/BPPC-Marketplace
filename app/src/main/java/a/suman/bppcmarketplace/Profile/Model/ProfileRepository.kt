@@ -26,11 +26,11 @@ class ProfileRepository(application: Application) {
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMapObservable {
-                getApolloClient(it[0]!!.token)
+                getApolloClient()
             }
     }
 
-    private fun getApolloClient(token: String): Observable<Response<ProfileWithProductsQuery.Data>> {
+    private fun getApolloClient(): Observable<Response<ProfileWithProductsQuery.Data>> {
         return Rx2Apollo.from(
             ApolloConnector.setUpApollo().query(
                 ProfileWithProductsQuery()

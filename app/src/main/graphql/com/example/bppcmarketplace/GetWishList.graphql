@@ -1,7 +1,7 @@
 query GetWishList{
     wishlist{
         name
-        basePrice
+        expectedPrice
         description
         images
         seller{

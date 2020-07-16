@@ -43,7 +43,7 @@ class WishListRepo(application: Application) {
                                     val my_wishlist =
                                         WishListClass(
                                             response.data()!!.wishlist!![0]!!.name,
-                                            response.data()!!.wishlist!![0]!!.basePrice,
+                                            response.data()!!.wishlist!![0]!!.expectedPrice,
                                             response.data()!!.wishlist!![0]!!.description,
                                             response.data()!!.wishlist!![0]!!.images,
                                             response.data()!!.wishlist!![0]!!.seller!!.name

@@ -11,10 +11,6 @@ class ApolloConnector {
         @Volatile
         private var INSTANCE: ApolloClient? = null
 
-        fun deleteApollo() {
-            INSTANCE = null
-        }
-
         fun setUpApollo(): ApolloClient {
             val instance = INSTANCE
             if (instance == null) {

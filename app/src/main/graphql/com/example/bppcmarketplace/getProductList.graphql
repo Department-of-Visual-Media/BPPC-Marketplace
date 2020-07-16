@@ -9,7 +9,7 @@ query getProductList($page:Int!){
             images
             sold
             name
-            basePrice
+            expectedPrice
             category{
                 name
             }
