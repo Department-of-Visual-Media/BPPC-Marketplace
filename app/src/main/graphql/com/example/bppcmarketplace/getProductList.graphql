@@ -1,5 +1,5 @@
-query getProductList($page:Int!){
-    products(page: $page) {
+query getProductList($page:Int!, $pagesize:Int!){
+    products(page: $page, pagesize: $pagesize) {
         page
         pages
         hasNext
@@ -10,6 +10,7 @@ query getProductList($page:Int!){
             sold
             name
             expectedPrice
+            description
             category{
                 name
             }

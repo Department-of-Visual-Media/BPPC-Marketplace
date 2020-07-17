@@ -1,24 +1,27 @@
 package a.suman.bppcmarketplace.ProductList.Model
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import androidx.paging.DataSource
 import com.example.bppcmarketplace.GetProductListQuery
+import com.google.android.datatransport.runtime.logging.Logging.d
 import io.reactivex.disposables.CompositeDisposable
 
 
 class ProductDataFactory : DataSource.Factory<Int, GetProductListQuery.Object>() {
 
-    private val error = MutableLiveData<List<String?>>()
+    init {
+        d("DataFactory", "NewFactory")
+    }
 
-    val errorState = liveData { emitSource(error) }
+    var productLiveData: MutableLiveData<ProductDataSource> = MutableLiveData()
     var compositeDisposable = CompositeDisposable()
 
     override fun create(): DataSource<Int, GetProductListQuery.Object> {
+        d("DataFactory", "Create")
         val productDataSource = ProductDataSource()
-        error.postValue(productDataSource.errorState.value)
+        productLiveData.postValue(productDataSource)
         compositeDisposable = productDataSource.compositeDisposable
-        return ProductDataSource()
+        return productDataSource
     }
 
 }

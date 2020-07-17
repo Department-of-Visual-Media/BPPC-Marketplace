@@ -67,10 +67,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+            android:layout_width="match_parent"
             android:id="@+id/prodrecyclerview"
-            android:layout_height="match_parent"/>
-
+            android:layout_height="match_parent"
+            tools:itemCount="2"
+            tools:listitem="@layout/recyclerview_prod_list" />
         <ImageView
             android:id="@+id/noInternetProduct"
             android:layout_width="match_parent"
@@ -78,6 +79,7 @@
             app:srcCompat="@drawable/internetconnection"
             android:padding="30dp"
             android:layout_marginBottom="100dp"
+
             android:tooltipText="No Internet Connection" />
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -1,19 +1,19 @@
 package a.suman.bppcmarketplace.ProductList.View
 
+import a.suman.bppcmarketplace.ProductList.Adapter.ProductListAdapter
+import a.suman.bppcmarketplace.ProductList.ViewModel.ProductsViewModel
 import a.suman.bppcmarketplace.R
-import android.graphics.LinearGradient
-import android.graphics.Shader
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.PaintDrawable
-import android.graphics.drawable.ShapeDrawable.ShaderFactory
-import android.graphics.drawable.shapes.RectShape
+import a.suman.bppcmarketplace.Utils.fillCustomGradient
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.datatransport.runtime.logging.Logging.d
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -34,41 +34,35 @@ class ProductListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fillCustomGradient(view.findViewById(R.id.appbar_product_list))
+        fillCustomGradient(view.findViewById(R.id.appbar_product_list), resources)
         Log.d("ProductList", "Blah")
-        animation=MainScope().launch {
-            while(true){noInternetProduct.animate().alpha(0f).duration = 500
-            delay(500)
-            noInternetProduct.animate().alpha(1f).duration = 500
-            delay(600)}
-        }
-    }
+        noInternetProduct.alpha = 0f
+        val productsViewModel = ViewModelProvider(this).get(ProductsViewModel::class.java)
+        val pagedListAdapter = ProductListAdapter()
+        prodrecyclerview.adapter = pagedListAdapter
+        prodrecyclerview.layoutManager = GridLayoutManager(context, 2)
+        productsViewModel.pagedList.observe(this, Observer {
+            pagedListAdapter.submitList(it)
+        })
+        productsViewModel.errorState.observe(this, Observer {
 
-    private fun fillCustomGradient(v: View) {
-        val layers = arrayOfNulls<Drawable>(1)
-        val sf: ShaderFactory = object : ShaderFactory() {
-            override fun resize(width: Int, height: Int): Shader {
-                return LinearGradient(
-                    0f,
-                    0f,
-                    0f,
-                    v.height.toFloat(), intArrayOf(
-                        resources.getColor(R.color.colorPrimaryDark, null),  // please input your color from resource for color-4
-                        resources.getColor(R.color.colorPrimaryDark, null),
-                        resources.getColor(R.color.colorPrimary, null),
-                        resources.getColor(R.color.design_default_color_background, null)
-                    ), floatArrayOf(0f, 0.6f, 0.8f, 1f),
-                    Shader.TileMode.CLAMP
-                )
+            if (it != null) {
+                d("ErrorState", it.toString())
+                if (it.isNotEmpty()) {
+                    if (it[0] == "NoInternet") {
+
+                        animation = MainScope().launch {
+                            while (true) {
+                                noInternetProduct.animate().alpha(0f).duration = 500
+                                delay(500)
+                                noInternetProduct.animate().alpha(1f).duration = 500
+                                delay(600)
+                            }
+                        }
+                    }
+                }
             }
-        }
-        val p = PaintDrawable()
-        p.shape = RectShape()
-        p.shaderFactory = sf
-        p.setCornerRadii(floatArrayOf(5f, 5f, 5f, 5f, 0f, 0f, 0f, 0f))
-        layers[0] = p as Drawable
-        val composite = LayerDrawable(layers)
-        v.background =composite
+        })
     }
 
     override fun onStop() {
