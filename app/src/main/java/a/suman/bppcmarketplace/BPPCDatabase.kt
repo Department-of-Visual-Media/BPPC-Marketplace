@@ -25,19 +25,20 @@ abstract class BPPCDatabase:RoomDatabase(){
 
         @Synchronized
         fun getBPPCDatabase(application: Application): BPPCDatabase {
-            val instance = INSTANCE
-            if (instance != null) {
-                return instance
+            var instance = INSTANCE
+            if (instance == null) {
+                synchronized(this) {
+                    if (instance == null) {
+                        instance = Room.databaseBuilder(
+                            application.applicationContext,
+                            BPPCDatabase::class.java,
+                            "BPPCDatabase"
+                        ).build()
+                        INSTANCE = instance
+                    }
+                }
             }
-
-            val instance2 = Room.databaseBuilder(
-                application.applicationContext,
-                BPPCDatabase::class.java,
-                "BPPCDatabase"
-            ).build()
-            INSTANCE = instance2
-            return instance2
-
+            return instance!!
         }
     }
 
