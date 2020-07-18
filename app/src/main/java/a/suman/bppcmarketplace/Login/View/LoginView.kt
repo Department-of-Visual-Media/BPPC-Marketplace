@@ -127,7 +127,7 @@ class LoginView : AppCompatActivity(), SensorEventListener {
 
         loginViewModel.loginToken.observe(this, Observer {
             if(it!=null){
-                Log.d("Token", "${it.token}")
+                Log.d("Token", it.token)
             if(it.isNew){
                 startActivity(Intent(this, NewUser::class.java))
                 finish()

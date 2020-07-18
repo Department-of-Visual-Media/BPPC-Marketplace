@@ -32,9 +32,8 @@ class SplashScreen : AppCompatActivity() {
             val ftime = System.currentTimeMillis()
             if ((ftime - itime) < 2000) {
                 if (it != null) {
-                    Log.d("Token", "${it.token}")
-                    //splashViewModel.updateData()
-                    TokenClass.token=it.token
+                    Log.d("Token", it.token)
+                    TokenClass.token = it.token
                     Handler().postDelayed({
                         if (it.isNew) {
                             startActivity(Intent(this, NewUser::class.java))
