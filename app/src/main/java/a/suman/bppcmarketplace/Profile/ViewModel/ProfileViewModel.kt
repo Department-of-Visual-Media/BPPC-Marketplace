@@ -1,5 +1,6 @@
 package a.suman.bppcmarketplace.Profile.ViewModel
 
+import a.suman.bppcmarketplace.ApolloConnector
 import a.suman.bppcmarketplace.Profile.Model.ProfileRepository
 import a.suman.bppcmarketplace.Profile.Model.UserProfileDataClass
 import android.app.Application
@@ -31,7 +32,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     private fun updateProfile() {
         isLoadingMutableLiveData.postValue(true)
-        compositeDisposable.add(profileRepository.getProfileObservable().subscribe {
+        compositeDisposable.add(profileRepository.getProfileObservable().subscribe({
             if (it.hasErrors()) {
                 Log.i("Profile Response Error", it.errors().toString())
             } else if (it.data()?.myProfile != null) {
@@ -46,11 +47,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                 productMutableLiveData.postValue(it.data()!!.myProfile!!.products)
                 isLoadingMutableLiveData.postValue(false)
             }
-        })
+        }, {
+            Log.i("Profile Update Failed", it.toString())
+        }))
     }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+        ApolloConnector.invalidateApollo()
     }
 }

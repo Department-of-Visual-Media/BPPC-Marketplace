@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bppcmarketplace.ProfileWithProductsQuery
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
@@ -57,7 +58,11 @@ class ProfileFragment : Fragment() {
         })
 
         profileViewModel.productLiveData.observe(viewLifecycleOwner, Observer {
-            //TODO:Consume Product list data in Recycler View
+            if (it != null) {
+                productAdapter.setDataList(it as List<ProfileWithProductsQuery.Product>)
+                if (it.isEmpty())
+                    productTextView.visibility = View.VISIBLE
+            }
         })
 
         profileViewModel.isLoadingLiveData.observe(viewLifecycleOwner, Observer {
