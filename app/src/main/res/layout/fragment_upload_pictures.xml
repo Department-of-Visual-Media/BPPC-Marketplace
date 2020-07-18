@@ -16,9 +16,10 @@
             android:id="@+id/spinner"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
+            android:padding="4dp"
             app:layout_constraintBottom_toTopOf="@+id/productNameEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -85,14 +86,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="Negotiable Price" />
+                android:backgroundTint="#CCE61E63"
+                android:text="Negotiable Price"
+                android:theme="@style/RadioButton" />
 
             <RadioButton
                 android:id="@+id/nonNegotiableRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Non-Negotiable Price" />
+                android:backgroundTint="#CCE61E63"
+                android:text="Non-Negotiable Price"
+                android:theme="@style/RadioButton" />
 
         </RadioGroup>
 
@@ -108,6 +113,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productdescriptionEditText"
+            app:np_dividerColor="#CCE61E63"
             app:np_dividerDistance="80dp"
             app:np_max="10000"
             app:np_min="2"
@@ -136,7 +142,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
+            android:background="@drawable/button_bg"
             android:text="Post"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

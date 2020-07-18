@@ -9,4 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#CCE61E63</item>
+    </style>
 </resources>
