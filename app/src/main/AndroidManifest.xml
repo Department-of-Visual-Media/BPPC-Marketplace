@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="a.suman.bppcmarketplace">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:screenOrientation="portrait"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        tools:replace="android:allowBackup">
         <activity android:name=".NewUser.View.NewUser"></activity>
         <activity android:name=".Splash.View.SplashScreen">
             <intent-filter>
@@ -21,14 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.View.LoginView">
-        </activity>
+        <activity android:name=".Login.View.LoginView"></activity>
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

@@ -22,19 +22,11 @@ class ProfileRepository(application: Application) {
     }
 
     fun getProfileObservable(): Observable<Response<ProfileWithProductsQuery.Data>> {
-        return appDatabase.getAuthenticationServices().getBasicUserData()
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
-            .flatMapObservable {
-                getApolloClient()
-            }
-    }
-
-    private fun getApolloClient(): Observable<Response<ProfileWithProductsQuery.Data>> {
         return Rx2Apollo.from(
             ApolloConnector.setUpApollo().query(
                 ProfileWithProductsQuery()
             )
         )
     }
+
 }

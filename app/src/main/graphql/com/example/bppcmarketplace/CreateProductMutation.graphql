@@ -1,0 +1,12 @@
+mutation CreateProduct($name:String,$expectedPrice:Int,$description:String,$isNegotiable:Boolean){
+    createProduct(input: {
+        name: $name,
+        expectedPrice: $expectedPrice,
+        description: $description,
+        isNegotiable:$isNegotiable
+    })
+    {
+        ok: ok
+
+    }
+}
