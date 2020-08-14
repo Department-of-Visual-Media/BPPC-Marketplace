@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -41,10 +42,10 @@ class ProductListFragment : Fragment() {
         val pagedListAdapter = ProductListAdapter()
         prodrecyclerview.adapter = pagedListAdapter
         prodrecyclerview.layoutManager = GridLayoutManager(context, 2)
-        productsViewModel.pagedList.observe(this, Observer {
+        productsViewModel.pagedList.observe(this as LifecycleOwner, Observer {
             pagedListAdapter.submitList(it)
         })
-        productsViewModel.errorState.observe(this, Observer {
+        productsViewModel.errorState.observe(this as LifecycleOwner, Observer {
 
             if (it != null) {
                 d("ErrorState", it.toString())

@@ -67,8 +67,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userrecyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                tools:listitem="@layout/recyclerview_user_list" />
             <ImageView
                 android:id="@+id/noInternetUser"
                 android:layout_width="match_parent"

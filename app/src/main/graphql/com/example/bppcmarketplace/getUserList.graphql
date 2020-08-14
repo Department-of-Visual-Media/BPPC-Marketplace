@@ -1,0 +1,13 @@
+query getUserList($page:Int!, $pagesize:Int!){
+    profiles(page:$page, pagesize: $pagesize){
+        page,
+        pages,
+        hasNext,
+        hasPrev,
+        objects{
+            username,
+            name,
+            avatar
+        }
+    }
+}

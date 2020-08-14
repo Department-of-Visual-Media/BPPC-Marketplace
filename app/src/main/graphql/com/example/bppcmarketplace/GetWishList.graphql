@@ -1,11 +1,17 @@
 query GetWishList{
     wishlist{
-        name
-        expectedPrice
-        description
-        images
-        seller{
+        page,
+        pages,
+        hasNext,
+        hasPrev,
+        objects{
             name
+            expectedPrice
+            description
+            images
+            seller{
+                name
+            }
         }
     }
 }

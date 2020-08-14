@@ -1,20 +1,20 @@
 package a.suman.bppcmarketplace.ProductList.Adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.bppcmarketplace.GetProductListQuery
+import com.example.bppcmarketplace.GetUserListQuery
 
-class DiffUtilCallbackUser : DiffUtil.ItemCallback<GetProductListQuery.Object>() {
+class DiffUtilCallbackUser : DiffUtil.ItemCallback<GetUserListQuery.Object>() {
     override fun areContentsTheSame(
-        oldItem: GetProductListQuery.Object,
-        newItem: GetProductListQuery.Object
+        oldItem: GetUserListQuery.Object,
+        newItem: GetUserListQuery.Object
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areItemsTheSame(
-        oldItem: GetProductListQuery.Object,
-        newItem: GetProductListQuery.Object
+        oldItem: GetUserListQuery.Object,
+        newItem: GetUserListQuery.Object
     ): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.username == newItem.username
     }
 }
