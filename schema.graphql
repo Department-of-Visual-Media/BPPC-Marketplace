@@ -102,6 +102,7 @@ type Query {
     productOffer(id: Int): [ProductOffer]
     products(page: Int, pagesize: Int): ProductPaginated
     profile(email: String, id: Int, username: String): Profile
+    searchProducts(querystring: String): [Product]
     wishlist: [Product]
 }
 
