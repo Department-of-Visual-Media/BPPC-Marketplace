@@ -40,6 +40,22 @@ type Mutation {
     updateWishlist(id: Int!): UpdateWishlist
 }
 
+type PaginatedProducts {
+    hasNext: Boolean
+    hasPrev: Boolean
+    objects: [Product]
+    page: Int
+    pages: Int
+}
+
+type PaginatedProfiles {
+    hasNext: Boolean
+    hasPrev: Boolean
+    objects: [Profile]
+    page: Int
+    pages: Int
+}
+
 type Product {
     category: Category
     createdAt: DateTime!
@@ -61,14 +77,6 @@ type ProductOffer {
     message: String!
     offerer: Profile!
     product: Product!
-}
-
-type ProductPaginated {
-    hasNext: Boolean
-    hasPrev: Boolean
-    objects: [Product]
-    page: Int
-    pages: Int
 }
 
 type ProductQnA {
@@ -100,10 +108,11 @@ type Query {
     myProfile: Profile
     product(id: Int): Product
     productOffer(id: Int): [ProductOffer]
-    products(page: Int, pagesize: Int): ProductPaginated
+    products(page: Int, pagesize: Int): PaginatedProducts
     profile(email: String, id: Int, username: String): Profile
+    profiles(page: Int, pagesize: Int): PaginatedProfiles
     searchProducts(querystring: String): [Product]
-    wishlist: [Product]
+    wishlist(page: Int, pagesize: Int): PaginatedProducts
 }
 
 type UpdateProduct {
