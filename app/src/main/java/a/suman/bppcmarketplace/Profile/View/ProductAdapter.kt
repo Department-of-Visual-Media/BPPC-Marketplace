@@ -34,7 +34,9 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
         fun bindItems(product: ProfileWithProductsQuery.Product) {
             itemView.productNameTextView.text = product.name
-            itemView.productStatusTextView.text = product.sold.toString()
+            itemView.productDescriptionTextView.text=product.description
+            itemView.productPriceTextView.text="Rs${product.expectedPrice}"
+
         }
     }
 }

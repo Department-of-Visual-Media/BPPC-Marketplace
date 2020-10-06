@@ -50,11 +50,11 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
             nameTextView.text = it.name
-            emailIcon.visibility = View.VISIBLE
-            emailTextView.text = it.email
+//            emailIcon.visibility = View.VISIBLE
+//            emailTextView.text = it.email
             hostelTextView.text = it.hostel
-            phoneIcon.visibility = View.VISIBLE
-            contactNoTextView.text = it.contactNo.toString()
+//            phoneIcon.visibility = View.VISIBLE
+//            contactNoTextView.text = it.contactNo.toString()
         })
 
         profileViewModel.productLiveData.observe(viewLifecycleOwner, Observer {
@@ -77,11 +77,9 @@ class ProfileFragment : Fragment() {
             showConfirmationDialog()
         }
 
-        wishlistButton.setOnClickListener {
-            Toast.makeText(context, "WishList", Toast.LENGTH_LONG).show()
-        }
 
-        mainActivityViewModel.loginToken.observe(this, Observer {
+
+        mainActivityViewModel.loginToken.observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 startActivity(Intent(activity, LoginView::class.java))
             }
