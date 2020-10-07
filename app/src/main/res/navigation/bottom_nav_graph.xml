@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/productListFragment">
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="a.suman.bppcmarketplace.ProductList.View.ProductListFragment"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="a.suman.bppcmarketplace.Profile.View.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/usersListFragment"
+        android:name="a.suman.bppcmarketplace.UsersList.View.UsersListFragment"
+        android:label="fragment_users_list"
+        tools:layout="@layout/fragment_users_list" />
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="a.suman.bppcmarketplace.ChatList.View.ChatListFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/uploadFragment"
+        android:name="a.suman.bppcmarketplace.Upload.View.UploadFragment"
+        android:label="fragment_upload_pictures"
+        tools:layout="@layout/fragment_upload_pictures" />
+</navigation>

@@ -3,28 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cnb_unselectedColor="#B6A4A4">
     <item
-        android:id="@+id/products"
+        android:id="@+id/productListFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Products"
         app:cnb_iconColor="#dd6644" />
 
     <item
-        android:id="@+id/users"
+        android:id="@+id/usersListFragment"
         android:icon="@drawable/ic_group_black_24dp"
         android:title="Users"
         app:cnb_iconColor="@color/colorPrimaryDark" />
     <item
-        android:id="@+id/upload"
+        android:id="@+id/uploadFragment"
         android:icon="@drawable/ic_add_a_photo_black_24dp"
         android:title="Upload"
         app:cnb_iconColor="#E91E63" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_person_outline_black_24dp"
         android:title="Profile"
         app:cnb_iconColor="#3B46E5" />
     <item
-        android:id="@+id/chat"
+        android:id="@+id/chatListFragment"
         android:icon="@drawable/ic_chat_black_24dp"
         android:title="Chat"
         app:cnb_iconColor="#379A77" />
